@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+<head>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1"><!-- Optimize mobile viewport -->
+
+	<title>Repo</title>
+
+	<!-- SCROLLS -->
+	<link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/repo.css">
+
+	<!-- SPELLS -->
+	<script src="lib/angular/angular.min.js"></script>
+	<script src="lib/angular-ui-router/release/angular-ui-router.min.js"></script>
+	<script src="lib/angular-filter/dist/angular-filter.js"></script>
+	<script src="lib/jquery/dist/jquery.min.js"></script>
+	<script src="lib/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src="lib/lodash/dist/lodash.min.js"></script>
+	<script src="lib/moment/moment.js"></script>
+
+	<script src="js/controllers/MainController.js"></script>
+	<script src="js/controllers/HomeController.js"></script>
+	<script src="js/extras.js"></script>
+	<script src="js/app.js"></script>
+
+</head>
+
+<body ng-app="repo" ng-controller="MainController">
+
+	<h1>{{title}}</h1>
+
+	<section ui-view></section>
+
+</body>
+</html>

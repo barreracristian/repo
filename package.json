@@ -1,0 +1,16 @@
+{
+  "name": "repo",
+  "version": "0.0.1",
+  "description": "First version of Repo",
+  "main": "server.js",
+  "author": "cbarrera",
+  "dependencies": {
+    "express": "^4.13.4",
+    "body-parser": "^1.4.3",
+    "cors": "2.7.1",
+    "lodash": "3.10.0",
+    "moment": "2.13.0",
+    "pg": "4.4.6",
+    "q": "1.4.1"
+  }
+}
