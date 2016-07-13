@@ -19,7 +19,7 @@ app.use(bodyParser.json({type: 'application/vnd.api+json'})); // parse applicati
 app.use(cors());
 app.options('*', cors()); // include before other routes
 
-var DB_CONN_STRING = "postgres://repo:toriyama@localhost:5432/repo";
+var DB_CONN_STRING = "postgres://postgres@localhost:5432/repo";
 console.log("DB_CONN_STRING", DB_CONN_STRING);
 
 // routes ======================================================================

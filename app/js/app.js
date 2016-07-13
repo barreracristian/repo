@@ -3,6 +3,7 @@ var app = angular.module('repo', [
     'angular.filter',
     'repo.controllers.MainController',
     'repo.controllers.HomeController',
+    'repo.services.DBService',
     'repo.extras'
 ]);
 
