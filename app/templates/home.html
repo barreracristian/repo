@@ -1,26 +1,261 @@
-<div class="container">
-    <!-- Example row of columns -->
-    <div class="row">
-        <div class="col-md-4">
-            <h2>{{title}}</h2>
-            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-            <p><a class="btn btn-default" href="#" role="button">View details »</a></p>
+
+
+<!-- =========== -->
+<!-- Main Slider -->
+<!-- =========== -->
+
+<style>
+    .section{
+
+    }
+    .section .title{
+        background-color: #FF6C14; color:white;
+        padding:10px;
+        text-transform: uppercase;
+        font-size:30px;
+        font-weight: 200;
+    }
+
+    .section .body{
+        background-color: #F6F4F4;
+        padding:10px;
+    }
+
+    .breadcrumb{
+        margin:0;
+        padding:0;
+        background: none;
+        text-align: right;
+    }
+
+    .breadcrumb a, .breadcrumb span{
+        color:white;
+    }
+
+</style>
+
+<div class="homepagecontainer">
+
+    <div class="slides home-col-sm-12">
+        <div class="container">
+            <img src="img/banner-width3.png">
         </div>
-        <div class="col-md-4">
-            <h2>{{title}}</h2>
-            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-            <p><a class="btn btn-default" href="#" role="button">View details »</a></p>
+    </div>
+    <div class="clearfix"></div>
+
+    <!-- =================== -->
+    <!-- Promo Banner Option -->
+    <!-- =================== -->
+
+    <div class="section">
+        <div class="row title">
+            <div class="col col-md-6">
+                <span>Busca por modelo de tu vehiculo</span>
+            </div>
+            <div class="col col-md-6">
+                <ol class="breadcrumb">
+                    <li>
+                        <a href="#">Elección</a>
+                    </li>
+                    <li ng-repeat="cat in catsDepth" ng-class="{active:$last}">
+                        <a ng-if="!$last">{{cat.name}}</a>
+                        <span ng-if="$last">{{cat.name}}</span>
+                    </li>
+                </ol>
+            </div>
         </div>
-        <div class="col-md-4">
-            <h2>{{title}}</h2>
-            <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-            <p><a class="btn btn-default" href="#" role="button">View details »</a></p>
+        <div class="row body">
+
+            <div class="container" style="display:block">
+                <div class="row">
+                    <article class="col-sm-4"
+                             ng-repeat="cat in chooser.categories | limitTo:3"
+                             ng-click="selectCat(cat)">
+                        <a>
+                            <img ng-src="img/{{cat.img}}" alt="">
+                        </a>
+                    </article>
+                </div>
+            </div>
         </div>
     </div>
 
-    <hr>
+    <div class="section">
+        <div class="row title">
+            <div class="col col-md-6">
+                <span>Busca por tipo de repuesto</span>
+            </div>
+        </div>
+        <div class="row body">
+            <div class="container" style="display:block">
+                <div class="row">
+                    <article class="col-sm-4"
+                             ng-repeat="cat in types | limitTo:3"
+                             ng-click="selectCat(cat)">
+                        <a>
+                            <img ng-src="img/{{cat.img}}" alt="">
+                        </a>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <footer>
-        <p>© 2015 Company, Inc.</p>
-    </footer>
+    <div class="section">
+        <div class="row title">
+            <div class="col col-md-6">
+                <span>Productos destacados</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="container home">
+
+        <!-- ================ -->
+        <!-- Featured section -->
+        <!-- ================ -->
+
+        <section class="feat">
+
+            <div class="row">
+                <div class="col-sm-12">
+
+                    <div class="tab-content row">
+
+                        <!-- Feat tab -->
+                        <div class="tab-pane active" id="feat">
+                            <article class="col-sm-4 product-box" ng-repeat="prod in products" ng-click="selectProd(prod)">
+                                <div class="product-inner">
+                                    <div class="view view-thumb">
+                                        <div class="image"><img ng-src="img/{{prod.img}}" alt=""></div>
+                                        <div class="mask">
+                                            <a href="http://ninetheme.com/tender/index.php?route=product/product&amp;product_id=65"></a>
+                                            <p>{{prod.name}}</p>
+                                            <a href="http://ninetheme.com/themes/Tendershophtml/product.html" class="info">View</a> <a href="http://ninetheme.com/themes/Tendershophtml/checkout.html" class="info">Buy</a>
+                                        </div>
+                                    </div>
+
+                                    <h2 class="price">
+                                        <span class="price-old">$120.68</span> <span class="price-new">$39.60</span>
+                                    </h2>
+                                    <p><a href="http://ninetheme.com/themes/Tendershophtml/product.html">{{prod.name}}</a></p>
+                                </div>
+                            </article>
+                        </div>
+                    </div> <!-- End tab-content -->
+
+                </div>
+            </div>
+
+
+        </section>
+
+    </div>
 </div>
+
+
+<!-- ============== -->
+<!-- Footer section -->
+<!-- ============== -->
+
+<footer>
+    <div class="container">
+        <section class="row foot">
+            <article class="col-sm-3">
+                <strong>Quick Links</strong>
+                <ul>
+                    <li><a href="http://ninetheme.com/themes/Tendershophtml/index.html#">About Us</a></li>
+                    <li><a href="http://ninetheme.com/themes/Tendershophtml/index.html#">Privacy</a></li>
+                    <li><a href="http://ninetheme.com/themes/Tendershophtml/index.html#">Returns Policies</a></li>
+                    <li><a href="http://ninetheme.com/themes/Tendershophtml/index.html#">News</a></li>
+                    <li><a href="http://ninetheme.com/themes/Tendershophtml/index.html#">Feedback</a></li>
+                    <li><a href="http://ninetheme.com/themes/Tendershophtml/index.html#">Contact Us</a></li>
+                </ul>
+            </article>
+            <article class="col-sm-3">
+                <strong>Latest Post</strong>
+                <ul>
+                    <li><a href="http://ninetheme.com/themes/Tendershophtml/post-right-sidebar.html">Big things are on the way</a><br><small>posted on April 24, 2012</small></li>
+                    <li><a href="http://ninetheme.com/themes/Tendershophtml/post-right-sidebar.html">Product Image Galleries</a><br><small>posted on June 13, 2012</small></li>
+                    <li><a href="http://ninetheme.com/themes/Tendershophtml/post-right-sidebar.html">So many options Reign is feature-packed</a><br><small>posted on May 9, 2012</small></li>
+                </ul>
+            </article>
+            <article class="col-sm-3">
+                <strong>Tweets</strong>
+                <div class="widget-body twitterfeed iconlist "><ul class="tweet_list"><li class="tweet_first tweet_odd"> <span class="tweet_text">WordPress index.php featured image&nbsp;kodu <a href="https://ninetheme.wordpress.com/2016/03/30/wordpress-index-php-featured-image-kodu/">ninetheme.wordpress.com/2016/03/30/wor…</a></span><span class="tweet_time"><a href="http://twitter.com/Te_magazin/status/715275714891624448" title="view tweet on twitter">about 110 days ago</a></span></li><li class="tweet_even"> <span class="tweet_text">Daisy Responsive Onepage HTML5&nbsp;Template <a href="https://ninetheme.wordpress.com/2016/03/24/daisy-responsive-onepage-html5-template">ninetheme.wordpress.com/2016/03/24/dai…</a></span><span class="tweet_time"><a href="http://twitter.com/Te_magazin/status/713062477563494400" title="view tweet on twitter">about 116 days ago</a></span></li></ul></div>
+            </article>
+
+            <article class="col-sm-3">
+                <strong>Newsletter</strong>
+                <div>
+                    <form class="form-inline">
+                        <input class="input-medium" type="text" placeholder="Email address">
+                        <button class="btn"><i class="icon-direction"></i></button>
+                    </form>
+                </div>
+                <address class="row">
+                    <div class="pull-left clabel"><i class="icon-location"></i></div>
+                    <div class="pull-left cdata">1234 Street City, ST 73243 California</div>
+                </address>
+                <address class="row">
+                    <div class="pull-left clabel"><i class="icon-phone"></i></div>
+                    <div class="pull-left cdata">888-555-1234</div>
+                </address>
+                <address class="row">
+                    <div class="pull-left clabel"><i class="icon-mail"></i></div>
+                    <div class="pull-left cdata"><a href="http://ninetheme.com/themes/Tendershophtml/index.html#">hello@Tendershop.com</a></div>
+                </address>
+
+            </article>
+        </section>
+
+    </div>
+    <section class="row doubleline">
+        <div class="container">
+            <div class="col-sm-6">
+
+                <div class="payment amex"></div>
+                <div class="payment mastercard"></div>
+                <div class="payment visa"></div>
+                <div class="payment paypal"></div>
+                <!--
+                <div class="payment cirrus"></div>
+                <div class="payment delta"></div>
+                <div class="payment direct-debit"></div>
+                <div class="payment discover"></div>
+                <div class="payment ebay"></div>
+                <div class="payment googlecheckout"></div>
+                <div class="payment maestro"></div>
+                <div class="payment moneybookers"></div>
+                <div class="payment sagepay"></div>
+                <div class="payment solo"></div>
+                <div class="payment switch"></div>
+                <div class="payment visaelectron"></div>
+                <div class="payment 2checkout"></div>
+                <div class="payment westernunion"></div>
+                -->
+            </div>
+            <div class="col-sm-6 currency">
+                <a href="http://ninetheme.com/themes/Tendershophtml/index.html#" class="active">USD</a> <a href="http://ninetheme.com/themes/Tendershophtml/index.html#">GBP</a> <a href="http://ninetheme.com/themes/Tendershophtml/index.html#">MYR</a> <a href="http://ninetheme.com/themes/Tendershophtml/index.html#">AUD</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="row social">
+        <div class="container">
+            <div class="pull-left">© 2012 TenderShop</div>
+            <div class="pull-right">
+                <ul>
+                    <li><a href="http://ninetheme.com/themes/Tendershophtml/index.html#"><i class="icon-facebook"></i></a></li>
+                    <li><a href="http://ninetheme.com/themes/Tendershophtml/index.html#"><i class="icon-twitter"></i></a></li>
+                    <li><a href="http://ninetheme.com/themes/Tendershophtml/index.html#"><i class="icon-gplus"></i></a></li>
+                    <li><a href="http://ninetheme.com/themes/Tendershophtml/index.html#"><i class="icon-pinterest"></i></a></li>
+                    <li><a href="http://ninetheme.com/themes/Tendershophtml/index.html#"><i class="icon-tumblr"></i></a></li>
+                    <li><a href="http://ninetheme.com/themes/Tendershophtml/index.html#"><i class="icon-instagrem"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+</footer>
+

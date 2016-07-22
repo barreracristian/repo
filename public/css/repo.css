@@ -3,5 +3,22 @@ html {
 }
 
 body {
-    padding-top: 50px;
+    background-color: #EBEBEB;
+    font-family: "PT Sans Narrow";
+}
+
+.row{
+    margin:0;
+}
+
+.container-menu{
+    background-color: #26556F !important;
+}
+
+.horizontal-nav a{
+    color:white;
+}
+
+.header-container{
+    background-color: #48768B;
 }

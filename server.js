@@ -24,7 +24,7 @@ console.log("DB_CONN_STRING", DB_CONN_STRING);
 
 // routes ======================================================================
 
-app.get('/api/products', function (req, res) {
+app.get('/api/any', function (req, res) {
 
     var results = [];
 
@@ -38,7 +38,7 @@ app.get('/api/products', function (req, res) {
         }
 
         // SQL Query > Select Data
-        var query = client.query("SELECT * FROM products");
+        var query = client.query("SELECT * FROM " + req.query.table);
 
         // Stream results back one row at a time
         query.on('row', function (row) {

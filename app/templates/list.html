@@ -1,0 +1,38 @@
+<style scoped>
+    .model{
+        border:1px solid red;
+        border-radius: 4px;
+    }
+
+    .model img{
+        height:150px;
+    }
+
+</style>
+
+<div class="container">
+
+    <ol class="breadcrumb">
+        <li>
+            <a href="#">Elección</a>
+        </li>
+        <li ng-repeat="cat in catsDepth" ng-class="{active:$last}">
+            <a href="#" ng-if="!$last">{{cat.name}}</a>
+            <span ng-if="$last">{{cat.name}}</span>
+        </li>
+    </ol>
+
+    <div class="row" ng-if="products">
+        <div class="model col-md-4"
+             ng-repeat="prod in products"
+             ng-click="selectProd(prod)">
+            <h2>{{prod.name}}</h2>
+            <img ng-src="img/{{prod.img}}">
+            <p><a class="btn btn-primary" href="#" role="button">Ver »</a></p>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2015 Company, Inc.</p>
+    </footer>
+</div>

@@ -9,7 +9,10 @@
 
     <!-- SCROLLS -->
     <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/tender.css">
+    <link rel="stylesheet" href="css/tenderfont.css">
     <link rel="stylesheet" href="css/repo.css">
+
 
     <!-- SPELLS -->
     <script src="lib/angular/angular.min.js"></script>
@@ -22,6 +25,7 @@
 
     <script src="js/controllers/MainController.js"></script>
     <script src="js/controllers/HomeController.js"></script>
+    <script src="js/controllers/ListController.js"></script>
     <script src="js/services/DBService.js"></script>
     <script src="js/extras.js"></script>
     <script src="js/app.js"></script>
@@ -30,41 +34,81 @@
 
 <body ng-app="repo" ng-controller="MainController">
 
-<nav class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
-                    aria-expanded="false" aria-controls="navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#">Project name</a>
+<div class="header-container">
+    <div class="container welcome">
+        <div class="row">
+            <div class="pull-left greet">
+                Bienvenido, <a href="http://ninetheme.com/themes/Tendershophtml/login.html">login here</a>
+            </div>
+            <div class="pull-right cart tright">
+
+                <!-- Cart Updates -->
+                <div class="counter">
+                    <a href="javascript:void(0);"><i class="icon-basket"></i> Your cart </a> : <span class="theme">$139</span>
+                </div>
+
+            </div>
         </div>
-        <div id="navbar" class="navbar-collapse collapse">
-            <form class="navbar-form navbar-right">
-                <div class="form-group">
-                    <input type="text" placeholder="Email" class="form-control">
-                </div>
-                <div class="form-group">
-                    <input type="password" placeholder="Password" class="form-control">
-                </div>
-                <button type="submit" class="btn btn-success">Sign in</button>
-            </form>
-        </div><!--/.navbar-collapse -->
     </div>
-</nav>
 
-<div class="jumbotron">
-    <div class="container">
-        <h1>{{title}}</h1>
+    <!-- ================ -->
+    <!-- Branding section -->
+    <!-- ================ -->
 
-        <p>This is a template for a simple marketing or informational website. It includes a large callout called a
-            jumbotron and three supporting pieces of content. Use it as a starting point to create something more
-            unique.</p>
+    <div class="container head">
+        <div class="row">
+            <div class="col-sm-12 clearfix">
+                <div class="top row">
+                    <div class="col-sm-8 logo text" style="display:none"><a href="#">TenderShop</a></div>
+                    <div class="col-sm-8 logo image"><a href="#"><img src="img/logo.png" alt=""></a></div>
 
-        <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more »</a></p>
+                    <div class="cart col-sm-4">
+                        <form action="#" class="topsearch">
+                            <input type="search" class="top-search" placeholder="Search">
+                            <button type="submit"><i class="icon-search"></i></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================ -->
+    <!-- Main Nav section -->
+    <!-- ================ -->
+
+    <div class="container-menu">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <nav class="horizontal-nav full-width">
+                        <ul class="nav" id="nav" style="display: block;">
+                            <li style="width: 20%;">
+                                <a href="#">Pages</a>
+                            </li>
+                            <li style="width: 20%;">
+                                <a href="#">Productos</a>
+                            </li>
+                            <li style="width: 20%;">
+                                <a href="#">Empresa</a>
+                            </li>
+                            <li style="width: 20%;">
+                                <a href="#">Miembros</a>
+                                <ul class="nav" style="overflow: hidden; display: none;">
+                                    <li><a href="blog-right-sidebar.html">blog right sidebar</a></li>
+                                    <li><a href="blog-left-sidebar.html">blog left sidebar</a></li>
+                                    <li><a href="post-right-sidebar.html">post right sidebar</a></li>
+                                    <li><a href="post-left-sidebar.html">post left sidebar</a></li>
+                                </ul>
+                            </li>
+                            <li style="width: 20%;">
+                                <a href="#">Contacto</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
