@@ -6,6 +6,32 @@ angular.module('repo.controllers.HomeController', [])
                 $scope.products = products;
             });
 
+            $scope.sections = [
+                {
+                    title:'Busca por modelo de tu vehiculo',
+                    categories:[
+                        {img:'logo_nissan.png'},
+                        {img:'logo_hyundai.png'},
+                        {img:'logo_toyota.png'}
+                    ]
+                },
+                {
+                    title:'Busca por tipo de repuesto',
+                    categories:[
+                        {img:'type_frenos.jpg'},
+                        {img:'type_filtros.jpg'},
+                        {img:'type_aceites.jpg'}
+                    ]
+                }
+            ];
+
+
+            $scope.featured = [
+                {img:'type_frenos.jpg'},
+                {img:'type_filtros.jpg'},
+                {img:'type_aceites.jpg'},
+            ];
+
             var subCategories = [
                 {
                     name: 'frenos',
@@ -13,14 +39,13 @@ angular.module('repo.controllers.HomeController', [])
                 },
                 {
                     name: 'filtros',
-                    img: 'filtros.jpg'
+                    img: 'frenos.jpg'
                 },
                 {
                     name: 'aceites',
                     img: 'aceites.jpg'
                 }
             ];
-            $scope.types = subCategories;
 
             var homeCategories = [
                 {

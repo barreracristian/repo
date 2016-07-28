@@ -32,82 +32,128 @@
 
 </head>
 
+<style>
+
+    .cabeza {
+        background-color: #48768B;
+        _border:1px solid red;
+        padding-top:30px;
+        padding-bottom:30px;
+    }
+
+    .cabeza .container{
+        _border:1px solid blue;
+    }
+
+    .loguito{
+        _border:1px solid yellow;
+    }
+
+    .loguito img{
+        height:60px;
+    }
+
+    /* ---------- */
+
+    .menu {
+        background-color: #26556F;
+    }
+
+    .menu .container {
+    }
+
+    /* ---------- */
+
+    .nav-pills li {
+        border-left: 1px solid #EBEBEB;
+    }
+
+    .nav-pills li:last-child {
+        border-right: 1px solid #EBEBEB;
+    }
+
+    .nav-pills li a {
+        text-transform: uppercase;
+        background-color: #26556F;
+        color: white;
+    }
+
+    .nav-pills li.active a {
+        background-color: #FF6C14;
+        color: white;
+    }
+
+    .nav-pills li a:hover, .nav-pills li.active a:hover {
+        background-color: white;
+        color: #FF6C14;
+        font-weight: bold;
+    }
+
+    /* ---------- */
+
+    .carrito{
+        background-color: #FF6C14;
+        color:white;
+        padding:10px;
+        text-transform: uppercase;
+    }
+
+    .carrito h1{
+        text-align: center;
+        margin:0 0 20px 0;
+        font-size: 1.3em;
+    }
+
+    .carrito .btn{
+        text-align: center;
+        margin:20px 0 0 0;
+        text-transform: uppercase;
+    }
+
+</style>
+
 <body ng-app="repo" ng-controller="MainController">
 
-<div class="header-container">
-    <div class="container welcome">
-        <div class="row">
-            <div class="pull-left greet">
-                Bienvenido, <a href="http://ninetheme.com/themes/Tendershophtml/login.html">login here</a>
-            </div>
-            <div class="pull-right cart tright">
-
-                <!-- Cart Updates -->
-                <div class="counter">
-                    <a href="javascript:void(0);"><i class="icon-basket"></i> Your cart </a> : <span class="theme">$139</span>
+<div class="row cabeza">
+    <div class="col col-md-12">
+        <div class="container">
+            <div class="row">
+                <div class="col col-md-10" style="text-align: left">
+                    <div class="loguito">
+                        <a href="#"><img src="img/logo.png" alt=""></a>
+                    </div>
                 </div>
-
-            </div>
-        </div>
-    </div>
-
-    <!-- ================ -->
-    <!-- Branding section -->
-    <!-- ================ -->
-
-    <div class="container head">
-        <div class="row">
-            <div class="col-sm-12 clearfix">
-                <div class="top row">
-                    <div class="col-sm-8 logo text" style="display:none"><a href="#">TenderShop</a></div>
-                    <div class="col-sm-8 logo image"><a href="#"><img src="img/logo.png" alt=""></a></div>
-
-                    <div class="cart col-sm-4">
-                        <form action="#" class="topsearch">
-                            <input type="search" class="top-search" placeholder="Search">
-                            <button type="submit"><i class="icon-search"></i></button>
-                        </form>
+                <div class="col col-md-2" style="text-align: right">
+                    <div class="carrito">
+                        <h1>Tu carro Juan</h1>
+                        <div>3 produtos</div>
+                        <div>Total: $45.000</div>
+                        <button class="btn btn-default btn-block" type="submit">Comprar</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-    <!-- ================ -->
-    <!-- Main Nav section -->
-    <!-- ================ -->
-
-    <div class="container-menu">
+<div class="row menu">
+    <div class="col col-md-12">
         <div class="container">
-            <div class="row">
-                <div class="col-sm-12">
-                    <nav class="horizontal-nav full-width">
-                        <ul class="nav" id="nav" style="display: block;">
-                            <li style="width: 20%;">
-                                <a href="#">Pages</a>
-                            </li>
-                            <li style="width: 20%;">
-                                <a href="#">Productos</a>
-                            </li>
-                            <li style="width: 20%;">
-                                <a href="#">Empresa</a>
-                            </li>
-                            <li style="width: 20%;">
-                                <a href="#">Miembros</a>
-                                <ul class="nav" style="overflow: hidden; display: none;">
-                                    <li><a href="blog-right-sidebar.html">blog right sidebar</a></li>
-                                    <li><a href="blog-left-sidebar.html">blog left sidebar</a></li>
-                                    <li><a href="post-right-sidebar.html">post right sidebar</a></li>
-                                    <li><a href="post-left-sidebar.html">post left sidebar</a></li>
-                                </ul>
-                            </li>
-                            <li style="width: 20%;">
-                                <a href="#">Contacto</a>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
-            </div>
+            <ul class="nav nav-pills nav-justified">
+                <li role="presentation" class="active"><a href="#">Home</a></li>
+                <li role="presentation"><a href="#">Productos</a></li>
+                <li role="presentation"><a href="#">Miembros</a></li>
+                <li role="presentation"><a href="#">Contacto</a></li>
+                <li>
+                    <form class="navbar-form" style="margin:0;">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Busqueda">
+                        </div>
+                        <button type="submit" class="btn btn-default">Buscar</button>
+                    </form>
+                </li>
+            </ul>
+
         </div>
     </div>
 </div>

@@ -11,14 +11,6 @@ body {
     margin:0;
 }
 
-.container-menu{
-    background-color: #26556F !important;
-}
-
-.horizontal-nav a{
-    color:white;
-}
-
-.header-container{
-    background-color: #48768B;
+.col{
+    padding:0;
 }
