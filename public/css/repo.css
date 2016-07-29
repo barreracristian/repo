@@ -14,3 +14,83 @@ body {
 .col{
     padding:0;
 }
+
+/* ------------- */
+
+.menu {
+    background-color: #26556F;
+}
+
+.menu .nav-pills li {
+    border-left: 1px solid #EBEBEB;
+}
+
+.menu .nav-pills li:last-child {
+    border-right: 1px solid #EBEBEB;
+}
+
+.menu .nav-pills li a {
+    text-transform: uppercase;
+    background-color: #26556F;
+    color: white;
+}
+
+.menu .nav-pills li.active a {
+    background-color: #FF6C14;
+    color: white;
+}
+
+.menu .nav-pills li a:hover, .menu .nav-pills li.active a:hover {
+    background-color: white;
+    color: #FF6C14;
+    font-weight: bold;
+}
+
+/* ------------- */
+
+.product{
+    border: 1px solid #EBEBEB;
+    background-color: white;
+    border-top: 5px solid #26556F;
+    padding: 10px;
+    _height: 130px;
+    margin:10px;
+}
+
+.product .image{
+    text-align: center;
+    _height:150px;
+}
+
+.product .image img{
+    height:150px;
+}
+
+.product .desc{
+    margin:10px 0 10px 0;
+    _border:1px solid red;
+    text-align: left;
+    height:50px;
+}
+.product .desc b{
+    text-transform: uppercase;
+    font-size: large;
+}
+
+.product .buy{
+    margin:10px 0 0 0;
+    _border:1px solid blue;
+    text-align: left;
+    height:30px;
+}
+
+.product .buy .price{
+    float:left;
+    font-size:22px;
+}
+
+.product .buy .btn{
+    background-color: #FF6C14;
+    color:white;
+    float:right;
+}

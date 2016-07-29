@@ -1,6 +1,6 @@
 angular.module('repo.controllers.HomeController', [])
     .controller('HomeController',
-        function ($scope, $state, DBService) {
+        function ($scope, $state, DBService, UtilService) {
 
             DBService.getProducts().then(function (products) {
                 $scope.products = products;
@@ -10,27 +10,24 @@ angular.module('repo.controllers.HomeController', [])
                 {
                     title:'Busca por modelo de tu vehiculo',
                     categories:[
-                        {img:'logo_nissan.png'},
-                        {img:'logo_hyundai.png'},
-                        {img:'logo_toyota.png'}
+                        {kind:'brand', value:'nissan', img:'logo_nissan.png'},
+                        {kind:'brand', value:'hyundai', img:'logo_hyundai.png'},
+                        {kind:'brand', value:'toyota', img:'logo_toyota.png'}
                     ]
                 },
                 {
                     title:'Busca por tipo de repuesto',
                     categories:[
-                        {img:'type_frenos.jpg'},
-                        {img:'type_filtros.jpg'},
-                        {img:'type_aceites.jpg'}
+                        {kind:'type', value:'frenos', img:'type_frenos.jpg'},
+                        {kind:'type', value:'filtros', img:'type_filtros.jpg'},
+                        {kind:'type', value:'aceites', img:'type_aceites.jpg'}
                     ]
                 }
             ];
 
+            $scope.featured = UtilService.getFakeProducts(4);
 
-            $scope.featured = [
-                {img:'type_frenos.jpg'},
-                {img:'type_filtros.jpg'},
-                {img:'type_aceites.jpg'},
-            ];
+            //---------
 
             var subCategories = [
                 {

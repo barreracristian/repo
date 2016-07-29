@@ -34,36 +34,26 @@
         height: 130px;
     }
 
-    .section .body .category:last-child, .section .body .product:last-child {
+    .section .body .category:last-child {
         margin-right: 0;
     }
 
-    .section .body .category img, .section .body .product img {
+    .section .body .category img {
         position: relative;
         height: 100%;
         width: auto;
     }
 
-    .section .body .product {
-        border: 1px solid #EBEBEB;
-        background-color: white;
-        border-top: 5px solid #26556F;
-        margin-right: 10px;
-        text-align: center;
-        padding: 10px;
-        height: 130px;
-    }
-
     /* --------- */
 
-    .slider img{
+    .slider img {
         width: 100%;
     }
 
 
 </style>
 
-<div class="homepagecontainer">
+<div class="micontenedor">
 
     <div class="row slider">
         <img src="img/banner_parts.jpg">
@@ -94,7 +84,7 @@
                              ng-repeat="cat in section.categories"
                              ng-click="selectCategory(cat)">
                             <div class="category">
-                                <a href="#">
+                                <a href="#/list/{{cat.kind}}/{{cat.value}}">
                                     <img ng-src="img/{{cat.img}}" alt="">
                                 </a>
                             </div>
@@ -133,13 +123,19 @@
         <div class="row body">
             <div class="container">
                 <div class="row">
-                    <div class="col-sm-3"
-                         ng-repeat="prod in featured"
-                         ng-click="selectProduct(prod)">
-                        <div class="product">
-                            <a>
-                                <img ng-src="img/{{prod.img}}" alt="">
-                            </a>
+                    <div class="col-md-3" ng-repeat="prod in featured">
+                        <div class="product" ng-click="selectProd(prod)">
+                            <div class="image">
+                                <img ng-src="img/{{prod.img}}">
+                            </div>
+                            <div class="desc">
+                                <b>{{prod.name}}</b><br/>
+                                <span>{{prod.description}}</span>
+                            </div>
+                            <div class="buy">
+                                <div class="price">{{prod.price | currency:$:0}}</div>
+                                <button type="button" class="btn btn-sm">Comprar</button>
+                            </div>
                         </div>
                     </div>
                 </div>

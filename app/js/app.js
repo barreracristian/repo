@@ -5,6 +5,7 @@ var app = angular.module('repo', [
     'repo.controllers.HomeController',
     'repo.controllers.ListController',
     'repo.services.DBService',
+    'repo.services.UtilService',
     'repo.extras'
 ]);
 
@@ -24,7 +25,7 @@ app.run(
                 controller: "HomeController"
             })
             .state('list', {
-                url: "/list/:cats",
+                url: "/list/:kind/:value",
                 templateUrl: 'templates/list.html',
                 controller: "ListController"
             })

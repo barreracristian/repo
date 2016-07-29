@@ -1,18 +1,85 @@
 <style scoped>
-    .model{
-        border:1px solid red;
-        border-radius: 4px;
+
+    .depth {
+        padding-bottom: 10px;
+        border-bottom: 4px solid #FF6C14;
+        margin: 30px 0 30px 0;
     }
 
-    .model img{
-        height:150px;
+    .depth li {
+        padding-right: 10px;
+    }
+
+    .depth .nav-pills li a {
+        text-transform: uppercase;
+        background-color: white;
+        color: #333;
+    }
+
+    .depth .nav-pills li.active a {
+        background-color: #FF6C14;
+        color: white;
+    }
+
+    .depth .nav-pills li a:hover, .depth .nav-pills li.active a:hover {
+        background-color: white;
+        color: #FF6C14;
+        font-weight: bold;
     }
 
 </style>
 
-<div class="container">
 
-    <ol class="breadcrumb">
+<div class="micontenedor">
+
+    <div class="container">
+
+        <div class="depth">
+
+            <ul class="nav nav-pills nav-justified">
+                <li role="presentation" class="active"><a href="#">Home</a></li>
+                <li role="presentation"><a href="#">Productos</a></li>
+                <li role="presentation"><a href="#">Miembros</a></li>
+                <li role="presentation"><a href="#">Contacto</a></li>
+                <li role="presentation" class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown"
+                       href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                        Dropdown <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>hola</li>
+                        <li>hdfgsdfsd</li>
+                        <li>hdfgsd</li>
+                    </ul>
+                </li>
+            </ul>
+
+        </div>
+
+        <div class="row">
+            <div class="col col-md-3" ng-repeat="prod in products">
+
+                <div class="product" ng-click="selectProd(prod)">
+                    <div class="image">
+                        <img ng-src="img/{{prod.img}}">
+                    </div>
+                    <div class="desc">
+                        <b>{{prod.name}}</b><br/>
+                        <span>{{prod.description}}</span>
+                    </div>
+                    <div class="buy">
+                        <div class="price">{{prod.price | currency:$:0}}</div>
+                        <button type="button" class="btn btn-sm">Comprar</button>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <!--ol class="breadcrumb">
         <li>
             <a href="#">Elección</a>
         </li>
@@ -20,19 +87,10 @@
             <a href="#" ng-if="!$last">{{cat.name}}</a>
             <span ng-if="$last">{{cat.name}}</span>
         </li>
-    </ol>
-
-    <div class="row" ng-if="products">
-        <div class="model col-md-4"
-             ng-repeat="prod in products"
-             ng-click="selectProd(prod)">
-            <h2>{{prod.name}}</h2>
-            <img ng-src="img/{{prod.img}}">
-            <p><a class="btn btn-primary" href="#" role="button">Ver »</a></p>
-        </div>
-    </div>
+    </ol-->
 
     <footer>
         <p>© 2015 Company, Inc.</p>
     </footer>
+
 </div>
