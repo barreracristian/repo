@@ -1,8 +1,17 @@
 angular.module('repo.controllers.MainController', [])
     .controller('MainController',
-        function ($scope) {
-            console.log("------------------ MainController");
-            $scope.title = "Main";
+        function ($scope, $location) {
+
+            $scope.isActive = function(str){
+                return str == $location.path();
+            };
+
+            $scope.cart = {
+                products: [
+                    {}, {}, {}
+                ],
+                total: 36524
+            };
         }
     )
 ;

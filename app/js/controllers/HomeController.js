@@ -8,7 +8,7 @@ angular.module('repo.controllers.HomeController', [])
 
             $scope.sections = [
                 {
-                    title:'Busca por modelo de tu vehiculo',
+                    title:'Busca por marca de tu vehículo',
                     categories:[
                         {kind:'brand', value:'nissan', img:'logo_nissan.png'},
                         {kind:'brand', value:'hyundai', img:'logo_hyundai.png'},

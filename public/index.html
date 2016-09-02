@@ -23,6 +23,8 @@
     <script src="lib/lodash/dist/lodash.min.js"></script>
     <script src="lib/moment/moment.js"></script>
 
+    <script src="js/controllers/CompanyController.js"></script>
+    <script src="js/controllers/ContactController.js"></script>
     <script src="js/controllers/MainController.js"></script>
     <script src="js/controllers/HomeController.js"></script>
     <script src="js/controllers/ListController.js"></script>
@@ -61,17 +63,26 @@
         color:white;
         padding:10px;
         text-transform: uppercase;
+        position: absolute;
+        right:0;
+        height:60px;
     }
 
-    .carrito h1{
-        text-align: center;
-        margin:0 0 20px 0;
-        font-size: 1.3em;
+    .carrito div{
+        display: inline;
+    }
+
+    .carrito .glyphicon-shopping-cart{
+        font-size: 30px;
+    }
+
+    .carrito .detail{
+        padding-left: 10px;
+        padding-right: 10px;
     }
 
     .carrito .btn{
         text-align: center;
-        margin:20px 0 0 0;
         text-transform: uppercase;
     }
 
@@ -83,17 +94,27 @@
     <div class="col col-md-12">
         <div class="container">
             <div class="row">
-                <div class="col col-md-10" style="text-align: left">
+                <div class="col col-md-6" style="text-align: left">
                     <div class="loguito">
                         <a href="#"><img src="img/logo.png" alt=""></a>
                     </div>
                 </div>
-                <div class="col col-md-2" style="text-align: right">
+                <div class="col col-md-6" style="text-align: right">
+
                     <div class="carrito">
-                        <h1>Tu carro Juan</h1>
-                        <div>3 produtos</div>
-                        <div>Total: $45.000</div>
-                        <button class="btn btn-default btn-block" type="submit">Comprar</button>
+                        <table>
+                            <tr>
+                                <td><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></td>
+                                <td class="detail">
+                                    <span>{{cart.products.length}} productos</span>
+                                    <br>
+                                    <span>Total: {{cart.total | currency:$:0}}</span>
+                                </td>
+                                <td>
+                                    <button class="btn btn-default btn-block" type="submit">Comprar</button>
+                                </td>
+                            </tr>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -105,12 +126,11 @@
     <div class="col col-md-12">
         <div class="container">
             <ul class="nav nav-pills nav-justified">
-                <li role="presentation" class="active"><a href="#">Home</a></li>
-                <li role="presentation"><a href="#">Productos</a></li>
-                <li role="presentation"><a href="#">Miembros</a></li>
-                <li role="presentation"><a href="#">Contacto</a></li>
-                <li>
-                    <form class="navbar-form" style="margin:0;">
+                <li role="presentation" ng-class="{active:isActive('/home')}"><a href="#/home">Home</a></li>
+                <li role="presentation" ng-class="{active:isActive('/company')}"><a href="#/company">Empresa</a></li>
+                <li role="presentation" ng-class="{active:isActive('/contact')}"><a href="#/contact">Contacto</a></li>
+                <li style="text-align: right; border-right: none;">
+                    <form class="navbar-form" style="margin:0; padding-right: 0;">
                         <div class="form-group">
                             <input type="text" class="form-control" placeholder="Busqueda">
                         </div>

@@ -1,6 +1,8 @@
 var app = angular.module('repo', [
     'ui.router',
     'angular.filter',
+    'repo.controllers.CompanyController',
+    'repo.controllers.ContactController',
     'repo.controllers.MainController',
     'repo.controllers.HomeController',
     'repo.controllers.ListController',
@@ -23,6 +25,16 @@ app.run(
                 url: "/home",
                 templateUrl: 'templates/home.html',
                 controller: "HomeController"
+            })
+            .state('company', {
+                url: "/company",
+                templateUrl: 'templates/company.html',
+                controller: "CompanyController"
+            })
+            .state('contact', {
+                url: "/contact",
+                templateUrl: 'templates/contact.html',
+                controller: "ContactController"
             })
             .state('list', {
                 url: "/list/:kind/:value",
