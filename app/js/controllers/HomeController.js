@@ -10,9 +10,9 @@ angular.module('repo.controllers.HomeController', [])
                 {
                     title:'Busca por marca de tu vehículo',
                     categories:[
-                        {kind:'brand', value:'nissan', img:'logo_nissan.png'},
-                        {kind:'brand', value:'hyundai', img:'logo_hyundai.png'},
-                        {kind:'brand', value:'toyota', img:'logo_toyota.png'}
+                        {kind:'brand', value:'Nissan', img:'logo_nissan.png'},
+                        {kind:'brand', value:'Hyundai', img:'logo_hyundai.png'},
+                        {kind:'brand', value:'Toyota', img:'logo_toyota.png'}
                     ]
                 },
                 {
