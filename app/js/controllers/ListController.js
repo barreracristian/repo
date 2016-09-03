@@ -48,7 +48,7 @@ angular.module('repo.controllers.ListController', [])
                 //console.log("------------------ newFilterSelected = " + JSON.stringify(filter, null, 2));
 
                 var rawFilter = $scope.filters[filter.key];
-                applyFilter(rawFilter.key, rawFilter.options[0]);
+                applyFilter(rawFilter.key);
                 getAvailableFilters();
             };
 
@@ -81,7 +81,7 @@ angular.module('repo.controllers.ListController', [])
                 $scope.appliedFilters = $scope.appliedFilters || [];
                 $scope.appliedFilters.push({
                     key: key,
-                    value: value
+                    value: value == 'none' ? undefined : value
                 });
             }
 

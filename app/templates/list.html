@@ -53,7 +53,9 @@
                 <li role="presentation" class="dropdown" ng-repeat="af in appliedFilters">
                     <a class="dropdown-toggle" data-toggle="dropdown"
                        role="button" aria-haspopup="true" aria-expanded="false">
-                        {{filters[af.key].name}}: {{af.value}}<span class="caret"></span>
+                        <span ng-if="af.value">{{filters[af.key].name}}: {{af.value}}</span>
+                        <span ng-if="!af.value">Elija {{filters[af.key].name}}</span>
+                        <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
                         <li ng-repeat="option in filters[af.key].options">
