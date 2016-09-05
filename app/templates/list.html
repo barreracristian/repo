@@ -58,7 +58,7 @@
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li ng-repeat="option in filters[af.key].options">
+                        <li ng-repeat="option in filters[af.key].options | orderBy:'toString()'">
                             <a class="submenu" ng-class="{selected:af.value == option}" ng-click="newOptionsSelected(filters[af.key], option)">{{option}}</a>
                         </li>
                         <li>
@@ -73,7 +73,7 @@
                         Agregue un filtro <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li ng-repeat="af in availableFilters">
+                        <li ng-repeat="af in availableFilters | orderBy:'name'">
                             <a class="submenu" ng-click="newFilterSelected(af)">{{af.name}}</a>
                         </li>
                     </ul>

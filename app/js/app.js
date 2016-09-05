@@ -3,9 +3,10 @@ var app = angular.module('repo', [
     'angular.filter',
     'repo.controllers.CompanyController',
     'repo.controllers.ContactController',
-    'repo.controllers.MainController',
     'repo.controllers.HomeController',
+    'repo.controllers.MainController',
     'repo.controllers.ListController',
+    'repo.controllers.ProductController',
     'repo.services.DBService',
     'repo.services.UtilService',
     'repo.extras'
@@ -40,6 +41,11 @@ app.run(
                 url: "/list/:kind/:value",
                 templateUrl: 'templates/list.html',
                 controller: "ListController"
+            })
+            .state('product', {
+                url: "/product/:sku",
+                templateUrl: 'templates/product.html',
+                controller: "ProductController"
             })
         ;
 

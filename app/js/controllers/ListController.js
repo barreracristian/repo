@@ -1,6 +1,6 @@
 angular.module('repo.controllers.ListController', [])
     .controller('ListController',
-        function ($scope, $state, $stateParams, DBService, UtilService) {
+        function ($scope, $stateParams, DBService, UtilService) {
 
             console.log("------------------ $stateParams = " + JSON.stringify($stateParams, null, 2));
 
@@ -10,39 +10,32 @@ angular.module('repo.controllers.ListController', [])
                 "brand": {
                     key: "brand",
                     name: "Marca",
-                    options: [
-                        "Nissan",
-                        "Toyota",
-                        "Hyundai"
-                    ]
+                    options: []
                 },
                 "year": {
                     key: "year",
                     name: "Año",
-                    options: [
-                        "2016",
-                        "2015",
-                        "2014",
-                        "2013",
-                        "2012",
-                        "2011",
-                    ]
+                    options: []
                 },
                 "model": {
                     key: "model",
                     name: "Modelo",
-                    options: [
-                        "V16",
-                        "Tiida"
-                    ]
+                    options: []
                 }
             };
+
+            _.each($scope.products, function(prod){
+                _.each(prod.fit, function(fit){
+                    uniqueFilterFill('brand', fit.brand);
+                    uniqueFilterFill('model', fit.model);
+                    uniqueFilterFill('year', fit.years);
+                });
+            });
 
             applyFilter($stateParams.kind, $stateParams.value);
             getAvailableFilters();
 
             // ------------------------------------------------
-
 
             $scope.newFilterSelected = function (filter) {
                 //console.log("------------------ newFilterSelected = " + JSON.stringify(filter, null, 2));
@@ -82,6 +75,15 @@ angular.module('repo.controllers.ListController', [])
                 $scope.appliedFilters.push({
                     key: key,
                     value: value == 'none' ? undefined : value
+                });
+            }
+
+            function uniqueFilterFill(key, item){
+                var adds = Array.isArray(item) ? item : [item];
+                _.each(adds, function(add){
+                    if($scope.filters[key].options.indexOf(add)<0){
+                        $scope.filters[key].options.push(add);
+                    }
                 });
             }
 
