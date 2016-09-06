@@ -10,6 +10,7 @@ angular.module('repo.services.UtilService', [])
 
                 for (var i = 0; i < count; ++i) {
                     var prod = {
+                        id:100 + i,
                         name: anyOf(names),
                         description: 'Loren Ipsum adg egkznv sg sdgwedg sdgg',
                         img: 'prod_0' + parseInt(Math.random() * 10) + '.jpg',

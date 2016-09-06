@@ -1,6 +1,6 @@
 angular.module('repo.controllers.MainController', [])
     .controller('MainController',
-        function ($scope, $location) {
+        function ($scope, $state, $location) {
 
             $scope.isActive = function(str){
                 return str == $location.path();
@@ -11,6 +11,12 @@ angular.module('repo.controllers.MainController', [])
                     {}, {}, {}
                 ],
                 total: 36524
+            };
+
+            $scope.selectProd = function(prod){
+                $state.go("product", {
+                    sku: prod.id
+                });
             };
         }
     )

@@ -1,9 +1,192 @@
+<style scoped>
+    .minipic {
+        height: 80px;
+        display: inline-table;
+        margin: 10px;
+        margin-left: 0;
+    }
+
+    .minipic img {
+        height: inherit;
+    }
+
+    .bigpic {
+        _border: 1px solid black;
+    }
+
+    .bigpic img {
+        width: 100%;
+    }
+
+    .description-container {
+        _border: 1px solid red;
+        padding: 20px;
+        text-align: left;
+    }
+
+    .description-container h1 {
+        text-transform: uppercase;
+        font-size: 30px;
+        font-weight: 200;
+        color: black;
+        margin-top: 0;
+    }
+
+    .description-container .price {
+        font-size: 34px;
+        font-weight: bold;
+        color: #26556F;
+    }
+
+    .description-container .addtocart {
+        margin-top: 20px;
+    }
+
+    .description-container .operators {
+        display: inline;
+    }
+
+    .description-container .operators span, .description-container .operators input {
+        display: inline-block;
+        height: 48px;
+        width: 48px;
+        font-size: 49px;
+        font-weight: 200;
+        line-height: 0.9;
+        vertical-align: middle;
+        color: #fff;
+        background: #EBEBEB;
+        text-align: center;
+        margin: 0 2px;
+    }
+
+    .description-container .operators input {
+        background: white;
+        color: inherit;
+        font-size: large !important;
+        font-weight: bold;
+    }
+
+    .description-container .btn {
+        display: inline;
+        background-color: #FF6C14;
+        color: white;
+        float: right;
+    }
+
+    .description-container .compatibility {
+        margin-top: 20px;
+    }
+
+    .description-container .compatibility ul {
+        text-transform: uppercase;
+        font-size: 16px;
+        list-style-type: square;
+        padding-left: 20px;
+    }
+
+</style>
 
 <div class="micontenedor">
 
 
-    Empresa
+    <div class="container">
 
+        <div class="row" style="margin-top: 30px;">
+            <div class="col col-md-12" style="background-color: white">
+
+                <div class="row">
+                    <div class="col col-md-6">
+                        <div class="bigpic">
+                            <img src="img/{{product.img}}">
+                        </div>
+                        <div>
+                            <div class="minipic" ng-repeat="a in [0,1,2,3,4]">
+                                <img src="img/{{product.img}}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col col-md-6 description-container">
+                        <h1>{{product.name}}</h1>
+                        <h4>{{product.description}}</h4>
+
+                        <div class="price">{{product.price | currency:$:0}}</div>
+
+                        <div class="compatibility">
+                            <ul>
+                                <li>Compatible con</li>
+                            </ul>
+                            <table class="table table-condensed">
+                                <tr>
+                                    <th>Marca</th>
+                                    <th>Modelo</th>
+                                    <th>Años</th>
+                                </tr>
+                                <tr ng-repeat="fit in product.fit">
+                                    <td>{{fit.brand}}</td>
+                                    <td>{{fit.model}}</td>
+                                    <td>{{fit.years | json}}</td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div class="addtocart">
+                            <div class="operators">
+                                <span> - </span>
+                                <input type="text" value="1">
+                                <span> + </span>
+                            </div>
+                            <button type="button" class="btn btn-lg">Agregar al Carro de Compra</button>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row" style="margin-top: 30px;">
+            <div class="section" style="margin-top: 30px;">
+                <div class="row title">
+                    <div class="col col-md-12">
+                        <span>Otros filtros compatibles con el <span style="color:#FF6C14;">Nissan V16 de 2012</span></span>
+                    </div>
+                </div>
+                <!--div class="col col-md-6">
+                    <ol class="breadcrumb">
+                        <li>
+                            <a href="#">Elección</a>
+                        </li>
+                        <li ng-repeat="cat in catsDepth" ng-class="{active:$last}">
+                            <a ng-if="!$last">{{cat.name}}</a>
+                            <span ng-if="$last">{{cat.name}}</span>
+                        </li>
+                    </ol>
+                </div-->
+                <div class="row body">
+                    <div class="row">
+                        <div class="col-md-3" ng-repeat="prod in featured">
+                            <div class="product" ng-click="selectProd(prod)">
+                                <div class="image">
+                                    <img ng-src="img/{{prod.img}}">
+                                </div>
+                                <div class="desc">
+                                    <b>{{prod.name}}</b><br/>
+                                    <span>{{prod.description}}</span>
+                                </div>
+                                <div class="buy">
+                                    <div class="price">{{prod.price | currency:$:0}}</div>
+                                    <button type="button" class="btn btn-sm">Comprar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
 
 </div>
 
@@ -92,22 +275,6 @@
                 <div class="payment mastercard"></div>
                 <div class="payment visa"></div>
                 <div class="payment paypal"></div>
-                <!--
-                <div class="payment cirrus"></div>
-                <div class="payment delta"></div>
-                <div class="payment direct-debit"></div>
-                <div class="payment discover"></div>
-                <div class="payment ebay"></div>
-                <div class="payment googlecheckout"></div>
-                <div class="payment maestro"></div>
-                <div class="payment moneybookers"></div>
-                <div class="payment sagepay"></div>
-                <div class="payment solo"></div>
-                <div class="payment switch"></div>
-                <div class="payment visaelectron"></div>
-                <div class="payment 2checkout"></div>
-                <div class="payment westernunion"></div>
-                -->
             </div>
             <div class="col-sm-6 currency">
                 <a href="#" class="active">USD</a>
