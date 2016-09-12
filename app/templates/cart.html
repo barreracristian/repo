@@ -1,0 +1,288 @@
+<style>
+    .product-image-small {
+        width: 60px;
+    }
+</style>
+
+<div class="micontenedor">
+
+    <div class="container">
+
+        <div class="row" style="margin-top: 30px;" ng-if="!finished">
+            <div class="col col-md-6" style="background-color: white; padding:10px;">
+
+                <table class="table table-striped table-condensed">
+                    <tr>
+                        <th></th>
+                        <th>Producto</th>
+                        <th>Precio</th>
+                        <th>Cantidad</th>
+                        <th>Total</th>
+                    </tr>
+                    <tr ng-repeat="prod in cart.products">
+                        <td><img class="product-image-small" ng-src="img/{{prod.img}}"></td>
+                        <td>{{prod.name}}</td>
+                        <td>{{prod.price | currency:$:0}}</td>
+                        <td>1</td>
+                        <td>{{prod.price | currency:$:0}}</td>
+                    </tr>
+                    <tr>
+                        <th colspan="2">Subtotal</th>
+                        <td colspan="3" style="text-align: right">{{23423 | currency:$:0}}</td>
+                    </tr>
+                </table>
+
+
+            </div>
+            <div class="col col-md-6" style="background-color: white; padding:10px; border-left:1px solid black;">
+
+                <div class="row">
+                    <div class="col col-md-3">
+                        <label>Despacho</label>
+                    </div>
+                    <div class="col col-md-9">
+                        <label class="radio-inline">
+                            <input type="radio" name="despachoRadios" ng-model="data.despacho" value="taller">
+                            Retiro en taller
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="despachoRadios" ng-model="data.despacho" value="domicilio">
+                            Despacho a domicilio
+                        </label>
+
+                        <div style="margin-top:20px" ng-if="data.despacho == 'taller'">
+                            <select class="form-control">
+                                <option>-- Seleccione un taller --</option>
+                                <option>Taller 1</option>
+                                <option>Taller 2</option>
+                            </select>
+                        </div>
+                        <div style="margin-top:20px" ng-if="data.despacho == 'domicilio'">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1" class="col-sm-2 control-label">Direccion</label>
+
+                                <div class="col-sm-10">
+                                    <input type="email" class="form-control" id="exampleInputEmail1"
+                                           placeholder="Direccion">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1" class="col-sm-2 control-label">Comuna</label>
+
+                                <div class="col-sm-10">
+                                    <input type="email" class="form-control" id="exampleInputEmail1"
+                                           placeholder="Comuna">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" style="margin-top: 30px;">
+                    <div class="col col-md-3">
+                        <label>Pago</label>
+                    </div>
+                    <div class="col col-md-9">
+                        <label class="radio-inline">
+                            <input type="radio" name="pagoRadios" ng-model="data.pago" value="transferencia">
+                            Transferencia Bancaria
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="pagoRadios" ng-model="data.pago" value="taller">
+                            Pago en Taller
+                        </label>
+
+                        <div style="margin-top:20px" ng-if="data.pago == 'transferencia'">
+                            <table>
+                                <tr>
+                                    <th>Banco</th>
+                                    <td>Banco Chile</td>
+                                </tr>
+                                <tr>
+                                    <th>Tipo Cuenta</th>
+                                    <td>Cuenta Corriente</td>
+                                </tr>
+                                <tr>
+                                    <th>Numero Cuenta</th>
+                                    <td>2342345235</td>
+                                </tr>
+                                <tr>
+                                    <th>Rut</th>
+                                    <td>14.236.346-7</td>
+                                </tr>
+                                <tr>
+                                    <th>Correo</th>
+                                    <td>pagos@megarepuestos.cl</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" style="margin-top: 30px;" ng-if="data.despacho && data.pago">
+                    <table class="table">
+                        <tr>
+                            <th>Productos</th>
+                            <td>{{45234534 | currency:$:0}}</td>
+                        </tr>
+                        <tr>
+                            <th>Despacho</th>
+                            <td>{{12445 | currency:$:0}}</td>
+                        </tr>
+                        <tr>
+                            <th>Total</th>
+                            <td>{{1343465 | currency:$:0}}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <button type="button" class="btn btn-block" ng-click="finish()">Finalizar</button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+
+            </div>
+        </div>
+
+        <div class="row" style="margin-top: 30px;" ng-if="finished">
+            <div class="jumbotron" style="background-color: white">
+                <h1>Compra Finalizada</h1>
+                <p>Te hemos enviado un correo a afsdgsg@gmail.com con los detalles de tu compra.</p>
+                <p>Gracias por comprar con megarespuestos.cl</p>
+                <p><a class="btn btn-primary btn-lg" href="#" role="button">Salir</a></p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<!-- ============== -->
+<!-- Footer section -->
+<!-- ============== -->
+
+<footer>
+    <div class="container">
+        <section class="row foot">
+            <article class="col-sm-3">
+                <strong>Quick Links</strong>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Privacy</a></li>
+                    <li><a href="#">Returns Policies</a></li>
+                    <li><a href="#">News</a></li>
+                    <li><a href="#">Feedback</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                </ul>
+            </article>
+            <article class="col-sm-3">
+                <strong>Latest Post</strong>
+                <ul>
+                    <li><a href="">Big things are on the way</a><br>
+                        <small>posted on April 24, 2012</small>
+                    </li>
+                    <li><a href="">Product Image Galleries</a><br>
+                        <small>posted on June 13, 2012</small>
+                    </li>
+                    <li><a href="">So many options Reign is feature-packed</a><br>
+                        <small>posted on May 9, 2012</small>
+                    </li>
+                </ul>
+            </article>
+            <article class="col-sm-3">
+                <strong>Tweets</strong>
+
+                <div class="widget-body twitterfeed iconlist ">
+                    <ul class="tweet_list">
+                        <li class="tweet_first tweet_odd"><span class="tweet_text">WordPress index.php featured image&nbsp;kodu <a
+                                href="">ninetheme.wordpress.com/2016/03/30/wor…</a></span><span class="tweet_time">
+                    <a href="" title="view tweet on twitter">about 110 days ago</a></span></li>
+                        <li class="tweet_even"> <span class="tweet_text">Daisy Responsive Onepage HTML5&nbsp;Template
+                    <a href="">ninetheme.wordpress.com/2016/03/24/dai…</a></span><span class="tweet_time"><a
+                                href="http://twitter.com/Te_magazin/status/713062477563494400"
+                                title="view tweet on twitter">about 116 days ago</a></span></li>
+                    </ul>
+                </div>
+            </article>
+
+            <article class="col-sm-3">
+                <strong>Newsletter</strong>
+
+                <div>
+                    <form class="form-inline">
+                        <input class="input-medium" type="text" placeholder="Email address">
+                        <button class="btn"><i class="icon-direction"></i></button>
+                    </form>
+                </div>
+                <address class="row">
+                    <div class="pull-left clabel"><i class="icon-location"></i></div>
+                    <div class="pull-left cdata">1234 Street City, ST 73243 California</div>
+                </address>
+                <address class="row">
+                    <div class="pull-left clabel"><i class="icon-phone"></i></div>
+                    <div class="pull-left cdata">888-555-1234</div>
+                </address>
+                <address class="row">
+                    <div class="pull-left clabel"><i class="icon-mail"></i></div>
+                    <div class="pull-left cdata">
+                        <a href="#">hello@Tendershop.com</a>
+                    </div>
+                </address>
+
+            </article>
+        </section>
+
+    </div>
+    <section class="row doubleline">
+        <div class="container">
+            <div class="col-sm-6">
+
+                <div class="payment amex"></div>
+                <div class="payment mastercard"></div>
+                <div class="payment visa"></div>
+                <div class="payment paypal"></div>
+                <!--
+                <div class="payment cirrus"></div>
+                <div class="payment delta"></div>
+                <div class="payment direct-debit"></div>
+                <div class="payment discover"></div>
+                <div class="payment ebay"></div>
+                <div class="payment googlecheckout"></div>
+                <div class="payment maestro"></div>
+                <div class="payment moneybookers"></div>
+                <div class="payment sagepay"></div>
+                <div class="payment solo"></div>
+                <div class="payment switch"></div>
+                <div class="payment visaelectron"></div>
+                <div class="payment 2checkout"></div>
+                <div class="payment westernunion"></div>
+                -->
+            </div>
+            <div class="col-sm-6 currency">
+                <a href="#" class="active">USD</a>
+                <a href="#">GBP</a>
+                <a href="#">MYR</a>
+                <a href="#">AUD</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="row social">
+        <div class="container">
+            <div class="pull-left">© 2012 TenderShop</div>
+            <div class="pull-right">
+                <ul>
+                    <li><a href="#"><i class="icon-facebook"></i></a></li>
+                    <li><a href="#"><i class="icon-twitter"></i></a></li>
+                    <li><a href="#"><i class="icon-gplus"></i></a></li>
+                    <li><a href="#"><i class="icon-pinterest"></i></a></li>
+                    <li><a href="#"><i class="icon-tumblr"></i></a></li>
+                    <li><a href="#"><i class="icon-instagrem"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+</footer>
+

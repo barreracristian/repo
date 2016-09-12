@@ -1,6 +1,7 @@
 var app = angular.module('repo', [
     'ui.router',
     'angular.filter',
+    'repo.controllers.CartController',
     'repo.controllers.CompanyController',
     'repo.controllers.ContactController',
     'repo.controllers.HomeController',
@@ -46,6 +47,11 @@ app.run(
                 url: "/product/:sku",
                 templateUrl: 'templates/product.html',
                 controller: "ProductController"
+            })
+            .state('cart', {
+                url: "/cart",
+                templateUrl: 'templates/cart.html',
+                controller: "CartController"
             })
         ;
 

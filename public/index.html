@@ -23,6 +23,7 @@
     <script src="lib/lodash/dist/lodash.min.js"></script>
     <script src="lib/moment/moment.js"></script>
 
+    <script src="js/controllers/CartController.js"></script>
     <script src="js/controllers/CompanyController.js"></script>
     <script src="js/controllers/ContactController.js"></script>
     <script src="js/controllers/HomeController.js"></script>
@@ -112,7 +113,7 @@
                                     <span>Total: {{cart.total | currency:$:0}}</span>
                                 </td>
                                 <td>
-                                    <button class="btn btn-default btn-block" type="submit">Comprar</button>
+                                    <button class="btn btn-default btn-block" type="submit" ng-click="showCart()">Comprar</button>
                                 </td>
                             </tr>
                         </table>

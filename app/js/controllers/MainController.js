@@ -18,6 +18,11 @@ angular.module('repo.controllers.MainController', [])
                     sku: prod.id
                 });
             };
+
+            $scope.showCart = function(){
+                console.log("------------------ showCart");
+                $state.go("cart");
+            }
         }
     )
 ;
