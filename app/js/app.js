@@ -8,6 +8,7 @@ var app = angular.module('repo', [
     'repo.controllers.MainController',
     'repo.controllers.ListController',
     'repo.controllers.ProductController',
+    'repo.services.CartService',
     'repo.services.DBService',
     'repo.services.UtilService',
     'repo.extras'

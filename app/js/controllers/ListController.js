@@ -4,9 +4,25 @@ angular.module('repo.controllers.ListController', [])
 
             console.log("------------------ $stateParams = " + JSON.stringify($stateParams, null, 2));
 
-            $scope.products = UtilService.getFakeProducts(10);
+            var allProducts = _.map(UtilService.getFakeProducts(100000), function(prod){
+                var filterString = "type:" + prod.type + " ";
+                _.each(prod.fit, function(fit){
+                    filterString += "brand:" + fit.brand + " model:" + fit.model + " ";
+                    _.each(fit.years, function(year){
+                        filterString += "year:" + year + " ";
+                    });
+                });
+                prod.filterstring = filterString;
+                return prod;
+            });
+
 
             $scope.filters = {
+                "type": {
+                    key: "type",
+                    name: "Tipo",
+                    options: []
+                },
                 "brand": {
                     key: "brand",
                     name: "Marca",
@@ -23,8 +39,10 @@ angular.module('repo.controllers.ListController', [])
                     options: []
                 }
             };
+            $scope.appliedFilters = [];
 
-            _.each($scope.products, function(prod){
+            _.each(allProducts, function(prod){
+                uniqueFilterFill('type', prod.type);
                 _.each(prod.fit, function(fit){
                     uniqueFilterFill('brand', fit.brand);
                     uniqueFilterFill('model', fit.model);
@@ -38,28 +56,55 @@ angular.module('repo.controllers.ListController', [])
             // ------------------------------------------------
 
             $scope.newFilterSelected = function (filter) {
-                //console.log("------------------ newFilterSelected = " + JSON.stringify(filter, null, 2));
-
                 var rawFilter = $scope.filters[filter.key];
-                applyFilter(rawFilter.key);
+                applyFilter(rawFilter.key, 'none');
                 getAvailableFilters();
             };
 
             $scope.newOptionsSelected = function(filter, option){
-                //console.log("------------------ filter = " + JSON.stringify(filter, null, 2));
-                //console.log("------------------ option = " + JSON.stringify(option, null, 2));
+                applyFilter(filter.key, option);
+                getAvailableFilters();
+            };
 
-                if(!option){
-                    _.remove($scope.appliedFilters, {key:filter.key});
+            $scope.removeFilter = function(filter){
+                applyFilter(filter.key, undefined);
+                getAvailableFilters();
+            };
+
+            function applyFilter(key, value) {
+
+                if(!value){
+                    _.remove($scope.appliedFilters, {key:key});
                 }else{
-                    var af = _.find($scope.appliedFilters, {key:filter.key});
+                    var af = _.find($scope.appliedFilters, {key:key});
                     if(af){
-                        af.value = option;
+                        af.value = value;
+                    }else{
+                        $scope.appliedFilters.push({
+                            key: key,
+                            value: value
+                        });
                     }
                 }
 
-                getAvailableFilters();
-            };
+                $scope.products = _.filter(allProducts, function(product){
+                    for(var i=0; i<$scope.appliedFilters.length; ++i){
+                        var filter = $scope.appliedFilters[i];
+                        var search = filter.key + ":" + filter.value;
+                        var match = product.filterstring.indexOf(search) >= 0 || filter.value == 'none';
+                        if(!match){
+                            return false;
+                        }
+                    }
+                    return true;
+                });
+
+                console.log("------------------ $scope.products = " + $scope.products.length);
+                //_.each($scope.products, function(p){
+                    //console.log("-- " + p.filterstring);
+                //})
+
+            }
 
             function getAvailableFilters() {
                 $scope.availableFilters = [];
@@ -67,14 +112,6 @@ angular.module('repo.controllers.ListController', [])
                     if (!_.find($scope.appliedFilters, {key: key})) {
                         $scope.availableFilters.push(value);
                     }
-                });
-            }
-
-            function applyFilter(key, value) {
-                $scope.appliedFilters = $scope.appliedFilters || [];
-                $scope.appliedFilters.push({
-                    key: key,
-                    value: value == 'none' ? undefined : value
                 });
             }
 

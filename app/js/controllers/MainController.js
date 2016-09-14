@@ -6,13 +6,6 @@ angular.module('repo.controllers.MainController', [])
                 return str == $location.path();
             };
 
-            $scope.cart = {
-                products: [
-                    {}, {}, {}
-                ],
-                total: 36524
-            };
-
             $scope.selectProd = function(prod){
                 $state.go("product", {
                     sku: prod.id
