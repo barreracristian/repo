@@ -3,7 +3,6 @@ angular.module('repo.services.CartService', [])
 
         var theCart = {
             products: [],
-            productsTotal: 0,
             deliveryCost: 0,
             //
             addProduct: function addProduct(product, quantity) {
@@ -11,22 +10,19 @@ angular.module('repo.services.CartService', [])
 
                 var prod = _.find(theCart.products, {id: product.id});
 
-                if (_.isUndefined(prod)) {
-                    var prod2add = _.cloneDeep(prod);
+                if (!prod) {
+                    var prod2add = _.cloneDeep(product);
                     prod2add.quantity = quantity;
-                    theCart.product.push(prod2add);
+                    theCart.products.push(prod2add);
                 }
                 else {
-                    prod.quantity += quantity;
+                    prod.quantity = quantity;
                 }
-
-                theCart.productsTotal += quantity * product.price;
             },
             removeProduct: function remove(product) {
                 for (var i = 0; i < theCart.products.length; ++i) {
                     if (theCart.products[i].id == product.id) {
                         theCart.elems.splice(i, 1);
-                        theCart.productsTotal -= product.quantity * product.price;
                         break;
                     }
                 }
@@ -39,7 +35,19 @@ angular.module('repo.services.CartService', [])
                 }
             },
             getTotal: function getTotal(){
-                return theCart.productsTotal + theCart.deliveryCost;
+                var sum = 0;
+                _.each(theCart.products, function(prod){
+                    sum += prod.quantity * prod.price;
+                });
+
+                return sum + theCart.deliveryCost;
+            },
+            getProductsCount: function getProductsCount(){
+                var sum = 0;
+                _.each(theCart.products, function(prod){
+                   sum += prod.quantity
+                });
+                return sum;
             }
         };
 

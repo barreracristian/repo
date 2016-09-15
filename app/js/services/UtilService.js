@@ -1,35 +1,50 @@
 angular.module('repo.services.UtilService', [])
     .factory('UtilService', function ($q, $http) {
 
-        var theProducts = createFakeProducts(30);
+        var brands = [
+            {name:'Toyota', models:['Yaris', 'Corolla', 'Corona']},
+            {name:'Hyundai', models:['Accent', 'Elantra']},
+            {name:'Nissan', models:['Tiida', 'v16']},
+        ];
 
-        function createFakeProducts(count) {
-            var brands = ["Toyota", "Hyundai", "Nissan"];
-            var models = ["V16", "Tiida", "Accent"];
-            var types = ["frenos", "filtros", "aceites"];
-            var names = ["freno", "kit de embrague", "filtro de aire", "carburador", "luces de cambio", "aceite", "filtro de aceite", "pastillas de freno", "filtro de aire"];
-            var products = [];
+        var productFamilies = [
+            {type:"frenos", name:'Pastillas de Frenos', items:["frenos_01","frenos_02","frenos_03","frenos_04","frenos_05"]},
+            {type:"filtro", name:'Filtro de Aire', items:["filtroaire_01","filtroaire_02","filtroaire_03","filtroaire_04","filtroaire_05"]},
+            {type:"embrague", name:'Kit de Embrague', items:["embrague_01","embrague_02","embrague_03","embrague_04","embrague_05"]},
+        ];
 
-            for (var i = 0; i < count; ++i) {
-                var prod = {
-                    id: 100 + i,
-                    name: anyOf(names),
-                    type: anyOf(types),
-                    description: 'Loren Ipsum adg egkznv sg sdgwedg sdgg',
-                    img: 'prod_0' + parseInt(Math.random() * 10) + '.jpg',
-                    price: 1000 + Math.random() * 20000,
-                    fit: []
-                };
+        var theProducts = createFakeProducts();
 
-                for (var j = 0; j < Math.random() * 10; ++j) {
-                    prod.fit.push({
-                        brand: anyOf(brands),
-                        model: anyOf(models),
-                        years: years(2 + parseInt(Math.random(10)))
-                    });
+        function createFakeProducts() {
+            var ret = [];
+            for (var i = 0; i < productFamilies.length; ++i) {
+                var productFamily = productFamilies[i];
+
+                for(var j=0; j<productFamily.items.length; ++j){
+                    var item = productFamily.items[j];
+
+                    var prod = {
+                        id: 100 + i,
+                        name: productFamily.name + " " + i,
+                        type: productFamily.type,
+                        description: 'Loren Ipsum adg egkznv sg sdgwedg sdgg',
+                        img: "products/" + item + '.jpg',
+                        price: 1000 + Math.random() * 20000,
+                        fit: []
+                    };
+
+                    for (var k = 0; k < Math.random() * 10; ++k) {
+                        var brand = anyOf(brands);
+                        prod.fit.push({
+                            brand: brand.name,
+                            model: anyOf(brand.models),
+                            years: years(2 + parseInt(Math.random(10)))
+                        });
+                    }
+
+                    ret.push(prod);
                 }
 
-                products.push(prod);
             }
 
             function anyOf(array) {
@@ -47,7 +62,7 @@ angular.module('repo.services.UtilService', [])
                 return years;
             }
 
-            return products;
+            return ret;
         }
 
         return {

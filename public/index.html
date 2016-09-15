@@ -109,9 +109,9 @@
                             <tr>
                                 <td><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></td>
                                 <td class="detail">
-                                    <span>{{cart.products.length}} productos</span>
+                                    <span>{{cart.getProductsCount()}} productos</span>
                                     <br>
-                                    <span>Total: {{cart.total | currency:$:0}}</span>
+                                    <span>Total: {{cart.getTotal() | currency:$:0}}</span>
                                 </td>
                                 <td>
                                     <button class="btn btn-default btn-block" type="submit" ng-click="showCart()">Comprar</button>

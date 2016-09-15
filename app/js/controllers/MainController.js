@@ -1,6 +1,6 @@
 angular.module('repo.controllers.MainController', [])
     .controller('MainController',
-        function ($scope, $state, $location) {
+        function ($scope, $state, $location, CartService) {
 
             $scope.isActive = function(str){
                 return str == $location.path();
@@ -11,6 +11,8 @@ angular.module('repo.controllers.MainController', [])
                     sku: prod.id
                 });
             };
+
+            $scope.cart = CartService.getCart();
 
             $scope.showCart = function(){
                 console.log("------------------ showCart");

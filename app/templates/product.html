@@ -132,11 +132,11 @@
 
                         <div class="addtocart">
                             <div class="operators">
-                                <span> - </span>
-                                <input type="text" value="1">
-                                <span> + </span>
+                                <span ng-click="changeQuantity(-1)"> - </span>
+                                <input type="text" ng-model="data.quantity">
+                                <span ng-click="changeQuantity(1)"> + </span>
                             </div>
-                            <button type="button" class="btn btn-lg">Agregar al Carro de Compra</button>
+                            <button type="button" class="btn btn-lg" ng-click="addToCart(product)">Agregar al Carro de Compra</button>
                         </div>
 
                     </div>
