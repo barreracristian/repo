@@ -28,6 +28,9 @@ angular.module('repo.services.FilterService', [])
                 );
             },
             getFilteredProducts: function (products, filters) {
+                console.log("------------------ getFilteredProducts");
+                console.log("------------------ filters = " + JSON.stringify(filters, null, 2));
+
                 return _.filter(products, function (product) {
 
                     /*
@@ -62,25 +65,25 @@ angular.module('repo.services.FilterService', [])
                         var filter = filters[i];
 
                         fits = getMatchingFits(product, fits, filter);
-                        if(fits.length == 0){
+                        if (fits.length == 0) {
                             matchAll = false;
                         }
                     }
 
-                    function getMatchingFits(product, fits, filter){
-                        if(filter.key == 'type'){
-                            if(product.type == filter.value){
+                    function getMatchingFits(product, fits, filter) {
+                        if (filter.key == 'type') {
+                            if (product.type == filter.value) {
                                 return fits;
-                            }else{
+                            } else {
                                 return [];
                             }
                         }
 
                         var matchingFits = [];
-                        for(var j=0; j<fits.length; ++j){
+                        for (var j = 0; j < fits.length; ++j) {
                             var fit = fits[j];
 
-                            if(fit[filter.key] == filter.value){
+                            if (fit[filter.key] == filter.value) {
                                 matchingFits.push(fit);
                             }
                         }
@@ -90,15 +93,16 @@ angular.module('repo.services.FilterService', [])
                     return matchAll;
                 });
             },
-            getFilterString: function (prod) {
-                var filterString = "type:" + prod.type + " ";
-                _.each(prod.fits, function (fit) {
-                    filterString += "brand:" + fit.brand + " model:" + fit.model + " ";
-                    _.each(fit.years, function (year) {
-                        filterString += "year:" + year + " ";
-                    });
-                });
-                return filterString;
+            getFilterHumanString: function (filters) {
+                var fhs =_.map(filters, function (f) {
+                    return f.value;
+                }).join(" ").trim();
+
+                if(!fhs || fhs.length == 0){
+                    return undefined;
+                }else{
+                    return fhs;
+                }
             }
         }
 

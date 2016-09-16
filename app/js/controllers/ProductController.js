@@ -9,22 +9,25 @@ angular.module('repo.controllers.ProductController', [])
             // Filtros
 
             $scope.appliedFilters = UtilService.url2filter($stateParams.filter);
-            console.log("------------------ $scope.appliedFilters = " + JSON.stringify($scope.appliedFilters, null, 2));
 
             var usualFilter = FilterService.extractUsualFilter($scope.appliedFilters);
-            if(usualFilter){
-                $scope.usualFilterString = _.map(usualFilter, function (f) {
-                    return f.value;
-                }).join(" ");
+            //console.log("------------------ usualFilter = " + JSON.stringify(usualFilter, null, 2));
 
-                $scope.featured = _.filter(FilterService.getFilteredProducts(UtilService.getAllProducts(), $scope.appliedFilters),
+            if(usualFilter && usualFilter.length > 0){
+                $scope.usualFilterHumanString = FilterService.getFilterHumanString(usualFilter);
+                //console.log("------------------ $scope.usualFilterHumanString = " + $scope.usualFilterHumanString);
+
+                var relevant = _.filter(FilterService.getFilteredProducts(UtilService.getAllProducts(), usualFilter),
                     function(prod){
-                        console.log("------------------ prod = " + JSON.stringify(prod, null, 2));
-                        console.log("------------------ $scope.product = " + JSON.stringify($scope.product, null, 2));
-
                         return prod.id != $scope.product.id;
                     }
                 );
+
+                if(!relevant || relevant.lentgth == 0){
+                    $scope.featured = UtilService.getFeaturedProducts(4);
+                }else{
+                    $scope.featured = relevant;
+                }
             }else{
                 $scope.featured = UtilService.getFeaturedProducts(4);
             }

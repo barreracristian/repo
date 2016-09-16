@@ -149,7 +149,8 @@
             <div class="section" style="margin-top: 30px;">
                 <div class="row title">
                     <div class="col col-md-12">
-                        <span>Otros productos compatibles con el <span style="color:#FF6C14;">{{usualFilterString | capitalize}}</span></span>
+                        <span ng-if="usualFilterHumanString">Otros productos compatibles con el <span style="color:#FF6C14;">{{usualFilterHumanString | capitalize}}</span></span>
+                        <span ng-if="!usualFilterHumanString">Otros productos que pueden interesarte</span>
                     </div>
                 </div>
                 <!--div class="col col-md-6">
