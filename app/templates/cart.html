@@ -2,150 +2,221 @@
     .product-image-small {
         width: 60px;
     }
+
+    .right{
+        text-align: right;
+    }
+
+    .subtotal{
+        background-color: #48768B !important;
+        color:white !important;
+        font-size: x-large;
+    }
+
+    .checkout-step{
+        background-color: white;
+        padding:20px;
+    }
+
 </style>
 
 <div class="micontenedor">
 
     <div class="container">
 
-        <div class="row" style="margin-top: 30px;" ng-if="!finished">
-            <div class="col col-md-6" style="background-color: white; padding:10px;">
+        <div class="row" style="margin-top: 30px;" ng-if="checkoutStep != 'finished'">
+            <div class="col col-md-6" style="padding:5px;">
 
-                <table class="table table-striped table-condensed">
-                    <tr>
-                        <th></th>
-                        <th>Producto</th>
-                        <th>Precio</th>
-                        <th>Cantidad</th>
-                        <th>Total</th>
-                    </tr>
-                    <tr ng-repeat="prod in cart.products">
-                        <td><img class="product-image-small" ng-src="img/{{prod.img}}"></td>
-                        <td>{{prod.name}}</td>
-                        <td>{{prod.price | currency:$:0}}</td>
-                        <td>{{prod.quantity}}</td>
-                        <td>{{prod.price * prod.quantity | currency:$:0}}</td>
-                    </tr>
-                    <tr>
-                        <th colspan="2">Subtotal</th>
-                        <td colspan="3" style="text-align: right">{{cart.getSubTotal() | currency:$:0}}</td>
-                    </tr>
-                </table>
+                <div class="checkout-step">
 
+                    <div class="title">Carro de Compra</div>
 
-            </div>
-            <div class="col col-md-6" style="background-color: white; padding:10px; border-left:1px solid black;">
-
-                <div class="row">
-                    <div class="col col-md-3">
-                        <label>Despacho</label>
-                    </div>
-                    <div class="col col-md-9">
-                        <label class="radio-inline">
-                            <input type="radio" name="despachoRadios" ng-model="data.despacho" value="taller">
-                            Retiro en taller
-                        </label>
-                        <label class="radio-inline">
-                            <input type="radio" name="despachoRadios" ng-model="data.despacho" value="domicilio">
-                            Despacho a domicilio
-                        </label>
-
-                        <div style="margin-top:20px" ng-if="data.despacho == 'taller'">
-                            <select class="form-control">
-                                <option>-- Seleccione un taller --</option>
-                                <option>Taller 1</option>
-                                <option>Taller 2</option>
-                            </select>
-                        </div>
-                        <div style="margin-top:20px" ng-if="data.despacho == 'domicilio'">
-                            <div class="form-group">
-                                <label for="exampleInputEmail1" class="col-sm-2 control-label">Direccion</label>
-
-                                <div class="col-sm-10">
-                                    <input type="email" class="form-control" id="exampleInputEmail1"
-                                           placeholder="Direccion">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputEmail1" class="col-sm-2 control-label">Comuna</label>
-
-                                <div class="col-sm-10">
-                                    <input type="email" class="form-control" id="exampleInputEmail1"
-                                           placeholder="Comuna">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row" style="margin-top: 30px;">
-                    <div class="col col-md-3">
-                        <label>Pago</label>
-                    </div>
-                    <div class="col col-md-9">
-                        <label class="radio-inline">
-                            <input type="radio" name="pagoRadios" ng-model="data.pago" value="transferencia">
-                            Transferencia Bancaria
-                        </label>
-                        <label class="radio-inline">
-                            <input type="radio" name="pagoRadios" ng-model="data.pago" value="taller">
-                            Pago en Taller
-                        </label>
-
-                        <div style="margin-top:20px" ng-if="data.pago == 'transferencia'">
-                            <table>
-                                <tr>
-                                    <th>Banco</th>
-                                    <td>Banco Chile</td>
-                                </tr>
-                                <tr>
-                                    <th>Tipo Cuenta</th>
-                                    <td>Cuenta Corriente</td>
-                                </tr>
-                                <tr>
-                                    <th>Numero Cuenta</th>
-                                    <td>2342345235</td>
-                                </tr>
-                                <tr>
-                                    <th>Rut</th>
-                                    <td>14.236.346-7</td>
-                                </tr>
-                                <tr>
-                                    <th>Correo</th>
-                                    <td>pagos@megarepuestos.cl</td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row" style="margin-top: 30px;" ng-if="data.despacho && data.pago">
-                    <table class="table">
+                    <table class="table table-striped table-condensed">
                         <tr>
-                            <th>Productos</th>
-                            <td>{{cart.getSubTotal() | currency:$:0}}</td>
+                            <th></th>
+                            <th>Producto</th>
+                            <th class="right">Precio</th>
+                            <th class="right">Cantidad</th>
+                            <th class="right">Total</th>
                         </tr>
-                        <tr>
-                            <th>Despacho</th>
-                            <td>{{cart.deliveryCost | currency:$:0}}</td>
-                        </tr>
-                        <tr>
-                            <th>Total</th>
-                            <td>{{cart.getTotal() | currency:$:0}}</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">
-                                <button type="button" class="btn btn-block" ng-click="finish()">Finalizar</button>
+                        <tr ng-repeat="prod in cart.products">
+                            <td>
+                                <span class="glyphicon glyphicon-remove-circle" aria-hidden="true" ng-click="removeFromCart(prod)"></span>
+                                <img class="product-image-small" ng-src="img/{{prod.img}}">
                             </td>
+                            <td>{{prod.name}}</td>
+                            <td class="right">{{prod.price | currency:$:0}}</td>
+                            <td class="right">{{prod.quantity}}</td>
+                            <td class="right">{{prod.price * prod.quantity | currency:$:0}}</td>
                         </tr>
                     </table>
+
+                    <table class="table table-striped table-condensed">
+                        <tr class="subtotal">
+                            <th>Subtotal</th>
+                            <th class="right">{{cart.getSubTotal() | currency:$:0}}</th>
+                        </tr>
+                    </table>
+
                 </div>
+
+            </div>
+            <div class="col col-md-6" style="padding:5px;">
+
+                <div class="checkout-step" ng-show="checkoutStep == 'delivery'">
+
+                    <div class="title">Elija su despacho</div>
+
+                    <div class="row">
+                        <div class="col col-md-6" style="padding: 5px;">
+                            <button type="button" class="btn btn-block"
+                                    ng-class="{'btn-primary': data.delivery == 'taller', 'btn-default': data.delivery != 'taller'}"
+                                    ng-click="selectDelivery('taller')">Retiro en Taller</button>
+                        </div>
+                        <div class="col col-md-6" style="padding: 5px;">
+                            <button type="button" class="btn btn-block"
+                                    ng-class="{'btn-primary': data.delivery == 'domicilio', 'btn-default': data.delivery != 'domicilio'}"
+                                    ng-click="selectDelivery('domicilio')">Despacho a Domicilio</button>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col col-md-12">
+
+                            <div style="margin-top:20px" ng-if="data.delivery == 'taller'">
+                                <select class="form-control">
+                                    <option>-- Seleccione un taller --</option>
+                                    <option>Taller 1</option>
+                                    <option>Taller 2</option>
+                                </select>
+                            </div>
+                            <div style="margin-top:20px" ng-if="data.delivery == 'domicilio'">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1" class="col-sm-2 control-label">Direccion</label>
+
+                                    <div class="col-sm-10">
+                                        <input type="email" class="form-control" id="exampleInputEmail1"
+                                               placeholder="Direccion">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1" class="col-sm-2 control-label">Comuna</label>
+
+                                    <div class="col-sm-10">
+                                        <input type="email" class="form-control" id="exampleInputEmail1"
+                                               placeholder="Comuna">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" style="padding-top: 20px;">
+                        <div class="col col-md-6 col-md-offset-6">
+                            <button type="button" class="btn btn-block"
+                                    ng-class="{'btn-repo': data.delivery == 'taller', 'disabled': data.delivery != 'taller'}"
+                                    ng-click="checkoutStep = 'payment'">Continuar al Pago</button>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="checkout-step" ng-show="checkoutStep == 'payment'">
+
+                    <div class="title">Elija su metodo de pago</div>
+
+                    <div class="row">
+                        <div class="col col-md-6" style="padding: 5px;">
+                            <button type="button" class="btn btn-block"
+                                    ng-class="{'btn-primary': data.payment == 'transferencia', 'btn-default': data.payment != 'transferencia'}"
+                                    ng-click="selectPayment('transferencia')">Transferencia Bancaria</button>
+                        </div>
+                        <div class="col col-md-6" style="padding: 5px;">
+                            <button type="button" class="btn btn-block"
+                                    ng-class="{'btn-primary': data.payment == 'taller', 'btn-default': data.payment != 'taller'}"
+                                    ng-click="selectPayment('taller')">Pago en Taller</button>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col col-md-12">
+
+                            <div style="margin-top:20px" ng-if="data.payment == 'transferencia'">
+                                <table>
+                                    <tr>
+                                        <th>Banco</th>
+                                        <td>Banco Chile</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Tipo Cuenta</th>
+                                        <td>Cuenta Corriente</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Numero Cuenta</th>
+                                        <td>2342345235</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Rut</th>
+                                        <td>14.236.346-7</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Correo</th>
+                                        <td>pagos@megarepuestos.cl</td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="row" style="padding-top: 20px;">
+                        <div class="col col-md-6 col-md-offset-6">
+                            <button type="button" class="btn btn-block"
+                                    ng-class="{'btn-repo': data.payment == 'transferencia', 'disabled': data.payment != 'transferencia'}"
+                                    ng-click="checkoutStep = 'resumen'">Ver Resumen Final</button>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="checkout-step" ng-show="checkoutStep == 'resumen'">
+
+                    <div class="title">Resumen</div>
+
+                    <div class="row">
+
+                        <table class="table">
+                            <tr>
+                                <th>Subtotal (Productos)</th>
+                                <td class="right">{{cart.getSubTotal() | currency:$:0}}</td>
+                            </tr>
+                            <tr>
+                                <th>Despacho</th>
+                                <td class="right">{{cart.deliveryCost | currency:$:0}}</td>
+                            </tr>
+                            <tr class="subtotal">
+                                <th>Total</th>
+                                <td class="right">{{cart.getTotal() | currency:$:0}}</td>
+                            </tr>
+                        </table>
+
+                    </div>
+
+                    <div class="row" style="padding-top: 20px;">
+                        <div class="col col-md-12">
+                            <button type="button" class="btn btn-block btn-repo"
+                                    ng-click="finish()">Finalizar</button>
+                        </div>
+                    </div>
+
+                </div>
+
 
 
             </div>
         </div>
 
-        <div class="row" style="margin-top: 30px;" ng-if="finished">
+        <div class="row" style="margin-top: 30px;" ng-if="checkoutStep == 'finished'">
             <div class="jumbotron" style="background-color: white">
                 <h1>Compra Finalizada</h1>
                 <p>Te hemos enviado un correo a afsdgsg@gmail.com con los detalles de tu compra.</p>

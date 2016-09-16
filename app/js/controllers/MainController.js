@@ -24,9 +24,8 @@ angular.module('repo.controllers.MainController', [])
 
             $scope.search = function(){
                 var searchstring = $scope.data.search;
-
-
             }
+
         }
     )
 ;

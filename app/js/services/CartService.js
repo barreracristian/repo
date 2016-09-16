@@ -22,7 +22,7 @@ angular.module('repo.services.CartService', [])
             removeProduct: function remove(product) {
                 for (var i = 0; i < theCart.products.length; ++i) {
                     if (theCart.products[i].id == product.id) {
-                        theCart.elems.splice(i, 1);
+                        theCart.products.splice(i, 1);
                         break;
                     }
                 }
