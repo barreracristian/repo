@@ -19,13 +19,13 @@ angular.module('repo.controllers.HomeController', [])
                     title:'Busca por tipo de repuesto',
                     categories:[
                         {kind:'type', value:'frenos', img:'type_frenos.jpg'},
-                        {kind:'type', value:'filtros', img:'type_filtros.jpg'},
+                        {kind:'type', value:'filtro', img:'type_filtros.jpg'},
                         {kind:'type', value:'aceites', img:'type_aceites.jpg'}
                     ]
                 }
             ];
 
-            $scope.featured = UtilService.getFakeProducts(4);
+            $scope.featured = UtilService.getFeaturedProducts(4);
 
             //---------
 

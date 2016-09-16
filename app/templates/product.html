@@ -122,10 +122,10 @@
                                     <th>Modelo</th>
                                     <th>Años</th>
                                 </tr>
-                                <tr ng-repeat="fit in product.fit">
+                                <tr ng-repeat="fit in product.fits | orderBy:['brand','model']">
                                     <td>{{fit.brand}}</td>
                                     <td>{{fit.model}}</td>
-                                    <td>{{fit.years | json}}</td>
+                                    <td>{{fit.years | array2list}}</td>
                                 </tr>
                             </table>
                         </div>
@@ -149,7 +149,7 @@
             <div class="section" style="margin-top: 30px;">
                 <div class="row title">
                     <div class="col col-md-12">
-                        <span>Otros filtros compatibles con el <span style="color:#FF6C14;">Nissan V16 de 2012</span></span>
+                        <span>Otros productos compatibles con el <span style="color:#FF6C14;">{{usualFilterString | capitalize}}</span></span>
                     </div>
                 </div>
                 <!--div class="col col-md-6">
@@ -166,13 +166,13 @@
                 <div class="row body">
                     <div class="row">
                         <div class="col-md-3" ng-repeat="prod in featured">
-                            <div class="product" ng-click="selectProd(prod)">
+                            <div class="product" ng-click="selectProd(prod, appliedFilters)">
                                 <div class="image">
                                     <img ng-src="img/{{prod.img}}">
                                 </div>
                                 <div class="desc">
                                     <b>{{prod.name}}</b><br/>
-                                    <span>{{prod.description}}</span>
+                                    <span>{{prod.id}} {{prod.description}}</span>
                                 </div>
                                 <div class="buy">
                                     <div class="price">{{prod.price | currency:$:0}}</div>

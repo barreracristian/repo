@@ -14,4 +14,15 @@ angular.module('repo.extras', [])
             }).join(" ");
         };
     })
+
+    .filter('array2list', function () {
+        return function (inputArray) {
+            if (_.isUndefined(inputArray)) {
+                return undefined;
+            }
+
+            return _.sortBy(inputArray, function(str){return str;}).join(", ");
+        };
+    })
+
 ;

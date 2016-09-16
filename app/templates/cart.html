@@ -23,12 +23,12 @@
                         <td><img class="product-image-small" ng-src="img/{{prod.img}}"></td>
                         <td>{{prod.name}}</td>
                         <td>{{prod.price | currency:$:0}}</td>
-                        <td>1</td>
-                        <td>{{prod.price | currency:$:0}}</td>
+                        <td>{{prod.quantity}}</td>
+                        <td>{{prod.price * prod.quantity | currency:$:0}}</td>
                     </tr>
                     <tr>
                         <th colspan="2">Subtotal</th>
-                        <td colspan="3" style="text-align: right">{{23423 | currency:$:0}}</td>
+                        <td colspan="3" style="text-align: right">{{cart.getSubTotal() | currency:$:0}}</td>
                     </tr>
                 </table>
 
@@ -123,15 +123,15 @@
                     <table class="table">
                         <tr>
                             <th>Productos</th>
-                            <td>{{45234534 | currency:$:0}}</td>
+                            <td>{{cart.getSubTotal() | currency:$:0}}</td>
                         </tr>
                         <tr>
                             <th>Despacho</th>
-                            <td>{{12445 | currency:$:0}}</td>
+                            <td>{{cart.deliveryCost | currency:$:0}}</td>
                         </tr>
                         <tr>
                             <th>Total</th>
-                            <td>{{1343465 | currency:$:0}}</td>
+                            <td>{{cart.getTotal() | currency:$:0}}</td>
                         </tr>
                         <tr>
                             <td colspan="2">

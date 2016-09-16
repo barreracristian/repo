@@ -1,16 +1,28 @@
 angular.module('repo.services.UtilService', [])
-    .factory('UtilService', function ($q, $http) {
+    .factory('UtilService', function ($q, $http, FilterService) {
 
         var brands = [
-            {name:'Toyota', models:['Yaris', 'Corolla', 'Corona']},
-            {name:'Hyundai', models:['Accent', 'Elantra']},
-            {name:'Nissan', models:['Tiida', 'v16']},
+            {name: 'Toyota', models: ['Yaris', 'Corolla', 'Corona']},
+            {name: 'Hyundai', models: ['Accent', 'Elantra']},
+            {name: 'Nissan', models: ['Tiida', 'v16']}
         ];
 
         var productFamilies = [
-            {type:"frenos", name:'Pastillas de Frenos', items:["frenos_01","frenos_02","frenos_03","frenos_04","frenos_05"]},
-            {type:"filtro", name:'Filtro de Aire', items:["filtroaire_01","filtroaire_02","filtroaire_03","filtroaire_04","filtroaire_05"]},
-            {type:"embrague", name:'Kit de Embrague', items:["embrague_01","embrague_02","embrague_03","embrague_04","embrague_05"]},
+            {
+                type: "frenos",
+                name: 'Pastillas de Frenos',
+                items: ["frenos_01", "frenos_02", "frenos_03", "frenos_04", "frenos_05"]
+            },
+            {
+                type: "filtro",
+                name: 'Filtro de Aire',
+                items: ["filtroaire_01", "filtroaire_02", "filtroaire_03", "filtroaire_04", "filtroaire_05"]
+            },
+            {
+                type: "embrague",
+                name: 'Kit de Embrague',
+                items: ["embrague_01", "embrague_02", "embrague_03", "embrague_04", "embrague_05"]
+            }
         ];
 
         var theProducts = createFakeProducts();
@@ -20,22 +32,22 @@ angular.module('repo.services.UtilService', [])
             for (var i = 0; i < productFamilies.length; ++i) {
                 var productFamily = productFamilies[i];
 
-                for(var j=0; j<productFamily.items.length; ++j){
+                for (var j = 0; j < productFamily.items.length; ++j) {
                     var item = productFamily.items[j];
 
                     var prod = {
-                        id: 100 + i,
-                        name: productFamily.name + " " + i,
+                        id: 100 + 10 * i + j,
+                        name: productFamily.name + " " + 10 * i + j,
                         type: productFamily.type,
                         description: 'Loren Ipsum adg egkznv sg sdgwedg sdgg',
                         img: "products/" + item + '.jpg',
                         price: 1000 + Math.random() * 20000,
-                        fit: []
+                        fits: []
                     };
 
                     for (var k = 0; k < Math.random() * 10; ++k) {
                         var brand = anyOf(brands);
-                        prod.fit.push({
+                        prod.fits.push({
                             brand: brand.name,
                             model: anyOf(brand.models),
                             years: years(2 + parseInt(Math.random(10)))
@@ -65,9 +77,32 @@ angular.module('repo.services.UtilService', [])
             return ret;
         }
 
+
         return {
-            getFakeProducts: function (count) {
+            getAllProducts: function () {
+                return theProducts;
+            },
+            getFeaturedProducts: function (count) {
                 return theProducts.slice(0, count);
+            },
+            getProductById: function (id) {
+                return _.find(theProducts, {id: parseInt(id)});
+            },
+            filter2url: function (appliedFilters) {
+                console.log("------------------ appliedFilters = " + JSON.stringify(appliedFilters, null, 2));
+                if (!appliedFilters) return undefined;
+                return _.map(appliedFilters, function (af) {
+                    return af.key + ":" + af.value;
+                }).join("-");
+            },
+            url2filter: function (str) {
+                //brand:Hyundai-model:Corona
+                return _.map(str.split("-"), function (f) {
+                    return {
+                        key: f.split(":")[0],
+                        value: f.split(":")[1]
+                    }
+                });
             }
         }
 

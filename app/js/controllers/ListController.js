@@ -1,21 +1,10 @@
 angular.module('repo.controllers.ListController', [])
     .controller('ListController',
-        function ($scope, $stateParams, DBService, UtilService) {
+        function ($scope, $stateParams, DBService, UtilService, FilterService) {
 
             console.log("------------------ $stateParams = " + JSON.stringify($stateParams, null, 2));
 
-            var allProducts = _.map(UtilService.getFakeProducts(100000), function(prod){
-                var filterString = "type:" + prod.type + " ";
-                _.each(prod.fit, function(fit){
-                    filterString += "brand:" + fit.brand + " model:" + fit.model + " ";
-                    _.each(fit.years, function(year){
-                        filterString += "year:" + year + " ";
-                    });
-                });
-                prod.filterstring = filterString;
-                return prod;
-            });
-
+            var allProducts = UtilService.getAllProducts();
 
             $scope.filters = {
                 "type": {
@@ -43,7 +32,7 @@ angular.module('repo.controllers.ListController', [])
 
             _.each(allProducts, function(prod){
                 uniqueFilterFill('type', prod.type);
-                _.each(prod.fit, function(fit){
+                _.each(prod.fits, function(fit){
                     uniqueFilterFill('brand', fit.brand);
                     uniqueFilterFill('model', fit.model);
                     uniqueFilterFill('year', fit.years);
@@ -87,23 +76,7 @@ angular.module('repo.controllers.ListController', [])
                     }
                 }
 
-                $scope.products = _.filter(allProducts, function(product){
-                    for(var i=0; i<$scope.appliedFilters.length; ++i){
-                        var filter = $scope.appliedFilters[i];
-                        var search = filter.key + ":" + filter.value;
-                        var match = product.filterstring.indexOf(search) >= 0 || filter.value == 'none';
-                        if(!match){
-                            return false;
-                        }
-                    }
-                    return true;
-                });
-
-                console.log("------------------ $scope.products = " + $scope.products.length);
-                //_.each($scope.products, function(p){
-                    //console.log("-- " + p.filterstring);
-                //})
-
+                $scope.products = FilterService.getFilteredProducts(allProducts, $scope.appliedFilters);
             }
 
             function getAvailableFilters() {

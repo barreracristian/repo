@@ -34,6 +34,14 @@ angular.module('repo.services.CartService', [])
                     return !!_.find(theCart.products, {id: product.id});
                 }
             },
+            getSubTotal: function getTotal(){
+                var sum = 0;
+                _.each(theCart.products, function(prod){
+                    sum += prod.quantity * prod.price;
+                });
+
+                return sum;
+            },
             getTotal: function getTotal(){
                 var sum = 0;
                 _.each(theCart.products, function(prod){
