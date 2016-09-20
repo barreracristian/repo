@@ -40,7 +40,7 @@ angular.module('repo.controllers.CartController', [])
             //Chekout Steps
 
             $scope.checkoutStep = 'delivery'; //delivery, payment, resumen, finished
-            $scope.data = {};
+            $scope.data = {delivery:{}, payment:{}};
 
             $scope.changeCheckoutStep = function(to){
                 if($scope.goodToGoTo(to)){
@@ -54,20 +54,20 @@ angular.module('repo.controllers.CartController', [])
             $scope.goodToGoTo = function (what) {
                 //payment
                 if (what == 'payment') {
-                    if ($scope.data.deliveryType == 'taller' && $scope.data.selectedTallerId) {
+                    if ($scope.data.delivery.type == 'taller' && $scope.data.delivery.tallerId) {
                         return true;
                     }
-                    if ($scope.data.deliveryType == 'domicilio' &&
-                        $scope.data.address &&
-                        $scope.data.commune) {
+                    if ($scope.data.delivery.type == 'domicilio' &&
+                        $scope.data.delivery.address &&
+                        $scope.data.delivery.commune) {
                         return true;
                     }
                     return false;
                 } else if(what == 'resumen'){
-                    if ($scope.data.paymentType == 'transferencia') {
+                    if ($scope.data.payment.type == 'transferencia') {
                         return true;
                     }
-                    if ($scope.data.paymentType == 'taller') {
+                    if ($scope.data.payment.type == 'taller') {
                         return true;
                     }
                     return false;

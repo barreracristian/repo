@@ -97,23 +97,23 @@
                     <div class="row">
                         <div class="col col-md-6" style="padding: 5px;">
                             <button type="button" class="btn btn-block"
-                                    ng-class="{'btn-primary': data.deliveryType == 'taller', 'btn-default': data.deliveryType != 'taller'}"
-                                    ng-click="data.deliveryType = 'taller'">Retiro en Taller</button>
+                                    ng-class="{'btn-primary': data.delivery.type == 'taller', 'btn-default': data.delivery.type != 'taller'}"
+                                    ng-click="data.delivery.type = 'taller'">Retiro en Taller</button>
                         </div>
                         <div class="col col-md-6" style="padding: 5px;">
                             <button type="button" class="btn btn-block"
-                                    ng-class="{'btn-primary': data.deliveryType == 'domicilio', 'btn-default': data.deliveryType != 'domicilio'}"
-                                    ng-click="data.deliveryType = 'domicilio'">Despacho a Domicilio</button>
+                                    ng-class="{'btn-primary': data.delivery.type == 'domicilio', 'btn-default': data.delivery.type != 'domicilio'}"
+                                    ng-click="data.delivery.type = 'domicilio'">Despacho a Domicilio</button>
                         </div>
                     </div>
 
-                    <div class="row" ng-if="data.deliveryType == 'taller'">
+                    <div class="row" ng-if="data.delivery.type == 'taller'">
                         <div class="col col-md-12">
                             <div class="radio option-box"
-                                 ng-class="{selected: data.selectedTallerId == address.id}"
+                                 ng-class="{selected: data.delivery.tallerId == address.id}"
                                  ng-repeat="address in talleres">
                                 <label>
-                                    <input type="radio" name="talleresRadios" value="{{address.id}}" ng-model="data.selectedTallerId">
+                                    <input type="radio" name="talleresRadios" value="{{address.id}}" ng-model="data.delivery.tallerId">
                                     <div>{{address.street}} {{address.number}}, {{address.detail}}</div>
                                     <div>{{address.commune}}</div>
                                 </label>
@@ -121,13 +121,13 @@
                         </div>
                     </div>
 
-                    <div class="row" ng-if="data.deliveryType == 'domicilio'">
+                    <div class="row" ng-if="data.delivery.type == 'domicilio'">
                         <div class="col col-md-12" style="margin-top: 10px;">
                             <div class="form-group">
                                 <label for="address" class="col-sm-2 control-label">Direccion</label>
 
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="address" ng-model="data.address"
+                                    <input type="text" class="form-control" id="address" ng-model="data.delivery.address"
                                            placeholder="Direccion">
                                 </div>
                             </div>
@@ -135,7 +135,7 @@
                                 <label for="commune" class="col-sm-2 control-label">Comuna</label>
 
                                 <div class="col-sm-10">
-                                    <select id="commune" class="form-control" ng-model="data.commune">
+                                    <select id="commune" class="form-control" ng-model="data.delivery.commune">
                                         <option value="Santiago">Santiago</option>
                                         <option value="Macul">Macul</option>
                                     </select>
@@ -161,17 +161,17 @@
                     <div class="row">
                         <div class="col col-md-6" style="padding: 5px;">
                             <button type="button" class="btn btn-block"
-                                    ng-class="{'btn-primary': data.paymentType == 'transferencia', 'btn-default': data.paymentType != 'transferencia'}"
-                                    ng-click="data.paymentType = 'transferencia'">Transferencia Bancaria</button>
+                                    ng-class="{'btn-primary': data.payment.type == 'transferencia', 'btn-default': data.payment.type != 'transferencia'}"
+                                    ng-click="data.payment.type = 'transferencia'">Transferencia Bancaria</button>
                         </div>
                         <div class="col col-md-6" style="padding: 5px;">
                             <button type="button" class="btn btn-block"
-                                    ng-class="{'btn-primary': data.paymentType == 'taller', 'btn-default': data.paymentType != 'taller'}"
-                                    ng-click="data.paymentType = 'taller'">Pago en Taller</button>
+                                    ng-class="{'btn-primary': data.payment.type == 'taller', 'btn-default': data.payment.type != 'taller'}"
+                                    ng-click="data.payment.type = 'taller'">Pago en Taller</button>
                         </div>
                     </div>
 
-                    <div class="row" ng-if="data.paymentType == 'transferencia'">
+                    <div class="row" ng-if="data.payment.type == 'transferencia'">
                         <div class="col col-md-12">
                             <div class="option-box selected">
                                 <table>
@@ -200,21 +200,21 @@
                         </div>
                     </div>
 
-                    <div class="row" ng-if="data.paymentType == 'taller'">
+                    <div class="row" ng-if="data.payment.type == 'taller'">
                         <div class="col col-md-12">
                             <div class="option-box selected">
                                 <table>
                                     <tr>
                                         <th>Dirección</th>
-                                        <td>{{getTaller(data.selectedTallerId).street}} {{getTaller(data.selectedTallerId).number}}</td>
+                                        <td>{{getTaller(data.delivery.tallerId).street}} {{getTaller(data.delivery.tallerId).number}}</td>
                                     </tr>
                                     <tr>
                                         <th>Detalle</th>
-                                        <td>{{getTaller(data.selectedTallerId).detail}}</td>
+                                        <td>{{getTaller(data.delivery.tallerId).detail}}</td>
                                     </tr>
                                     <tr>
                                         <th>Comuna</th>
-                                        <td>{{getTaller(data.selectedTallerId).commune}}</td>
+                                        <td>{{getTaller(data.delivery.tallerId).commune}}</td>
                                     </tr>
                                 </table>
                             </div>
