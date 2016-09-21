@@ -76,7 +76,8 @@ body {
     margin-right: 10px;
     text-align: center;
     padding: 10px;
-    height: 130px;
+    height: 160px;
+    padding-bottom: 40px;
 }
 
 .section .body .category:last-child {

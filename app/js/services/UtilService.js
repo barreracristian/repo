@@ -2,24 +2,27 @@ angular.module('repo.services.UtilService', [])
     .factory('UtilService', function ($q, $http, FilterService) {
 
         var brands = [
-            {name: 'Toyota', models: ['Yaris', 'Corolla', 'Corona']},
-            {name: 'Hyundai', models: ['Accent', 'Elantra']},
-            {name: 'Nissan', models: ['Tiida', 'v16']}
+            {name: 'Toyota', img:'logo_toyota.png', models: ['Yaris', 'Corolla', 'Corona']},
+            {name: 'Hyundai', img:'logo_hyundai.png', models: ['Accent', 'Elantra']},
+            {name: 'Nissan', img:'logo_nissan.png', models: ['Tiida', 'v16']}
         ];
 
         var productFamilies = [
             {
                 type: "frenos",
+                img: 'type_frenos.jpg',
                 name: 'Pastillas de Frenos',
                 items: ["frenos_01", "frenos_02", "frenos_03", "frenos_04", "frenos_05"]
             },
             {
                 type: "filtro",
-                name: 'Filtro de Aire',
+                img: 'type_filtros.jpg',
+                name: 'Filtros de Aire',
                 items: ["filtroaire_01", "filtroaire_02", "filtroaire_03", "filtroaire_04", "filtroaire_05"]
             },
             {
                 type: "embrague",
+                img: 'type_embragues.jpg',
                 name: 'Kit de Embrague',
                 items: ["embrague_01", "embrague_02", "embrague_03", "embrague_04", "embrague_05"]
             }
@@ -103,6 +106,16 @@ angular.module('repo.services.UtilService', [])
                         value: f.split(":")[1]
                     }
                 });
+            },
+            getHomeBrands: function(){
+                return [
+                    brands[0], brands[1], brands[2]
+                ]
+            },
+            getHomeTypes: function(){
+                return [
+                    productFamilies[0], productFamilies[1], productFamilies[2]
+                ]
             }
         }
 

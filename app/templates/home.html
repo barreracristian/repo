@@ -11,6 +11,22 @@
         height: 200px;
     }
 
+    .another{
+        position: absolute;
+        left: 15px;
+        height: calc(100% - 30px);
+        width: calc(100% - 30px);
+        font-size: 24px;
+        padding-top: 45px;
+        color: #525252;
+    }
+    .cat-title{
+        font-size: medium;
+        position: absolute;
+        bottom: 10px;
+        width: calc(100% - 50px);
+    }
+
 </style>
 
 <div class="micontenedor">
@@ -26,34 +42,22 @@
                     <span>{{section.title}}</span>
                 </div>
             </div>
-            <!--div class="col col-md-6">
-                <ol class="breadcrumb">
-                    <li>
-                        <a href="#">Elección</a>
-                    </li>
-                    <li ng-repeat="cat in catsDepth" ng-class="{active:$last}">
-                        <a ng-if="!$last">{{cat.name}}</a>
-                        <span ng-if="$last">{{cat.name}}</span>
-                    </li>
-                </ol>
-            </div-->
             <div class="row body">
                 <div class="container">
                     <div class="row">
                         <div class="col-sm-3"
-                             ng-repeat="cat in section.categories"
-                             ng-click="selectCategory(cat)">
+                             ng-repeat="cat in section.categories">
                             <div class="category">
                                 <a href="#/list/{{cat.kind}}/{{cat.value}}">
                                     <img ng-src="img/{{cat.img}}" alt="">
                                 </a>
+                                <div class="cat-title">{{cat.name}}</div>
                             </div>
                         </div>
-                        <div class="col-sm-3"
-                             ng-click="selectCategory(section.categories[0])">
+                        <div class="col-sm-3">
                             <div class="category">
-                                <a href="#/list/{{section.categories[0].kind}}/none">
-                                    Otra
+                                <a class="another" href="#/list/{{section.categories[0].kind}}/none">
+                                   {{section.another}}
                                 </a>
                             </div>
                         </div>
@@ -69,17 +73,6 @@
                 <span>Productos destacados</span>
             </div>
         </div>
-        <!--div class="col col-md-6">
-            <ol class="breadcrumb">
-                <li>
-                    <a href="#">Elección</a>
-                </li>
-                <li ng-repeat="cat in catsDepth" ng-class="{active:$last}">
-                    <a ng-if="!$last">{{cat.name}}</a>
-                    <span ng-if="$last">{{cat.name}}</span>
-                </li>
-            </ol>
-        </div-->
         <div class="row body">
             <div class="container">
                 <div class="row">

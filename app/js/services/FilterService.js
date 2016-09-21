@@ -1,17 +1,37 @@
 angular.module('repo.services.FilterService', [])
     .factory('FilterService', function ($q, $http) {
 
-        var usuarlFilters = [
+        var allFilters = [
             {
-                key: 'brand',
+                key:'brand',
+                name:'Marca'
+            },
+            {
+                key:'model',
+                name:'Modelo'
+            },
+            {
+                key:'year',
+                name:'Año'
+            },
+            {
+                key:'type',
+                name:'Tipo'
+            }
+        ];
+
+
+        var usualFilters = [
+            {
+                key: allFilters[0].key,
                 order: 1
             },
             {
-                key: 'model',
+                key: allFilters[1].key,
                 order: 2
             },
             {
-                key: 'year',
+                key: allFilters[2].key,
                 order: 3
             }
         ];
@@ -20,18 +40,17 @@ angular.module('repo.services.FilterService', [])
             extractUsualFilter: function (appliedFilters) {
                 return _.sortBy(_.filter(appliedFilters,
                     function (af) {
-                        return _.find(usuarlFilters, {key: af.key});
+                        return _.find(usualFilters, {key: af.key});
                     }),
                     function (af) {
-                        return _.find(usuarlFilters, {key: af.key}).order;
+                        return _.find(usualFilters, {key: af.key}).order;
                     }
                 );
             },
             getFilteredProducts: function (products, filters) {
-                console.log("------------------ getFilteredProducts");
-                console.log("------------------ filters = " + JSON.stringify(filters, null, 2));
+                console.log("------------------ getFilteredProducts = " + JSON.stringify(filters, null, 2));
 
-                return _.filter(products, function (product) {
+                return _.filter(_.cloneDeep(products), function (product) {
 
                     /*
                      filter
@@ -69,6 +88,7 @@ angular.module('repo.services.FilterService', [])
                             matchAll = false;
                         }
                     }
+                    product.fits = fits;
 
                     function getMatchingFits(product, fits, filter) {
                         if (filter.key == 'type') {
@@ -83,7 +103,7 @@ angular.module('repo.services.FilterService', [])
                         for (var j = 0; j < fits.length; ++j) {
                             var fit = fits[j];
 
-                            if (fit[filter.key] == filter.value) {
+                            if (fit[filter.key] == filter.value || filter.value == 'none') {
                                 matchingFits.push(fit);
                             }
                         }
@@ -103,6 +123,9 @@ angular.module('repo.services.FilterService', [])
                 }else{
                     return fhs;
                 }
+            },
+            getAllFilters: function(){
+                return allFilters;
             }
         }
 
