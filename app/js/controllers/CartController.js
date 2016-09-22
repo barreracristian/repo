@@ -8,52 +8,61 @@ angular.module('repo.controllers.CartController', [])
                 $scope.cart.addProduct(prod, 1 + parseInt(Math.random() * 10));
             });
 
-            $scope.talleres = [
-                {
-                    id: 1,
-                    street: 'Diez de Julio',
-                    number: '354',
-                    detail: 'esquina Sta. Rosa',
-                    commune: 'Santiago'
-                },
-                {
-                    id: 2,
-                    street: 'Av Matta',
-                    number: '7734',
-                    detail: 'Local B1',
-                    commune: 'Maipu'
-                }
-            ];
+            $scope.talleres = UtilService.getTalleres();
 
-            $scope.getTaller = function(id){
+            $scope.getTaller = function (id) {
                 return _.find($scope.talleres, {id: parseInt(id)});
             };
 
-
-
             $scope.removeFromCart = function (prod) {
-                if($scope.checkoutStep == 'delivery' || $scope.checkoutStep == 'payment'){
+                if ($scope.checkoutStep == 'delivery' || $scope.checkoutStep == 'payment') {
                     CartService.getCart().removeProduct(prod);
                 }
             };
 
             //Chekout Steps
 
-            $scope.checkoutStep = 'delivery'; //delivery, payment, resumen, finished
-            $scope.data = {delivery:{}, payment:{}};
+            $scope.checkoutStep = 'authentication'; //authentication, delivery, payment, resumen, finished
+            $scope.data = {delivery: {}, payment: {}, authentication: {}};
+            var costs = {
+                delivery: [
+                    {
+                        type: 'taller',
+                        cost: 0
+                    },
+                    {
+                        type: 'domicilio',
+                        cost: 23523
+                    }
+                ]
+            };
 
-            $scope.changeCheckoutStep = function(to){
-                if($scope.goodToGoTo(to)){
+            $scope.changeCheckoutStep = function (to) {
+                if ($scope.goodToGoTo(to)) {
                     $scope.checkoutStep = to;
-                    if(to == 'finished'){
+                    if (to == 'finished') {
                         CartService.reset();
                     }
                 }
             };
 
+            $scope.backTo = function (to) {
+                if (to == 'delivery') {
+                    $scope.data.payment = {};
+                } else if (to == 'authentication') {
+                    $scope.data.delivery = {};
+                }
+                $scope.checkoutStep = to;
+            };
+
             $scope.goodToGoTo = function (what) {
                 //payment
-                if (what == 'payment') {
+                if (what == 'delivery') {
+                    if ($scope.data.authentication.mobile_number && $scope.data.authentication.password) {
+                        return true;
+                    }
+                    return false;
+                } else if (what == 'payment') {
                     if ($scope.data.delivery.type == 'taller' && $scope.data.delivery.tallerId) {
                         return true;
                     }
@@ -63,15 +72,12 @@ angular.module('repo.controllers.CartController', [])
                         return true;
                     }
                     return false;
-                } else if(what == 'resumen'){
-                    if ($scope.data.payment.type == 'transferencia') {
-                        return true;
-                    }
-                    if ($scope.data.payment.type == 'taller') {
+                } else if (what == 'resumen') {
+                    if ($scope.data.payment.type == 'transferencia' || $scope.data.payment.type == 'taller') {
                         return true;
                     }
                     return false;
-                } else if(what == 'finished'){
+                } else if (what == 'finished') {
                     return true;
                 }
 

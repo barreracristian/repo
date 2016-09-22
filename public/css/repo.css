@@ -146,3 +146,8 @@ body {
     background-color: #FF6C14;
     color:white;
 }
+
+.btn-selected{
+    background-color: #DAE4E8;
+    border-color: #BBCCD4;
+}

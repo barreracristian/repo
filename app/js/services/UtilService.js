@@ -28,6 +28,23 @@ angular.module('repo.services.UtilService', [])
             }
         ];
 
+        var allTalleres = [
+            {
+                id: 1,
+                street: 'Diez de Julio',
+                number: '354',
+                detail: 'esquina Sta. Rosa',
+                commune: 'Santiago'
+            },
+            {
+                id: 2,
+                street: 'Av Matta',
+                number: '7734',
+                detail: 'Local B1',
+                commune: 'Maipu'
+            }
+        ];
+
         var theProducts = createFakeProducts();
 
         function createFakeProducts() {
@@ -117,6 +134,9 @@ angular.module('repo.services.UtilService', [])
                 return [
                     productFamilies[0], productFamilies[1], productFamilies[2]
                 ]
+            },
+            getTalleres: function () {
+                return allTalleres;
             }
         }
 
