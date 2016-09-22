@@ -2,9 +2,9 @@ angular.module('repo.services.UtilService', [])
     .factory('UtilService', function ($q, $http, FilterService) {
 
         var brands = [
-            {name: 'Toyota', img:'logo_toyota.png', models: ['Yaris', 'Corolla', 'Corona']},
-            {name: 'Hyundai', img:'logo_hyundai.png', models: ['Accent', 'Elantra']},
-            {name: 'Nissan', img:'logo_nissan.png', models: ['Tiida', 'v16']}
+            {name: 'Toyota', img: 'logo_toyota.png', models: ['Yaris', 'Corolla', 'Corona']},
+            {name: 'Hyundai', img: 'logo_hyundai.png', models: ['Accent', 'Elantra']},
+            {name: 'Nissan', img: 'logo_nissan.png', models: ['Tiida', 'v16']}
         ];
 
         var productFamilies = [
@@ -101,18 +101,19 @@ angular.module('repo.services.UtilService', [])
             url2filter: function (str) {
                 //brand:Hyundai-model:Corona
                 return _.map(str.split("-"), function (f) {
+                    var key = f.split(":")[0];
+                    var value = key == 'year' ? parseInt(f.split(":")[1]) : f.split(":")[1];
                     return {
-                        key: f.split(":")[0],
-                        value: f.split(":")[1]
+                        key: key, value: value
                     }
                 });
             },
-            getHomeBrands: function(){
+            getHomeBrands: function () {
                 return [
                     brands[0], brands[1], brands[2]
                 ]
             },
-            getHomeTypes: function(){
+            getHomeTypes: function () {
                 return [
                     productFamilies[0], productFamilies[1], productFamilies[2]
                 ]

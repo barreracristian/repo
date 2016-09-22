@@ -4,15 +4,21 @@ angular.module('repo.services.FilterService', [])
         var allFilters = [
             {
                 key:'brand',
-                name:'Marca'
+                name:'Marca',
+                usual:true,
+                usualOrder:1
             },
             {
                 key:'model',
-                name:'Modelo'
+                name:'Modelo',
+                usual:true,
+                usualOrder:2
             },
             {
                 key:'year',
-                name:'Año'
+                name:'Año',
+                usual:true,
+                usualOrder:3
             },
             {
                 key:'type',
@@ -20,30 +26,14 @@ angular.module('repo.services.FilterService', [])
             }
         ];
 
-
-        var usualFilters = [
-            {
-                key: allFilters[0].key,
-                order: 1
-            },
-            {
-                key: allFilters[1].key,
-                order: 2
-            },
-            {
-                key: allFilters[2].key,
-                order: 3
-            }
-        ];
-
         return {
             extractUsualFilter: function (appliedFilters) {
                 return _.sortBy(_.filter(appliedFilters,
                     function (af) {
-                        return _.find(usualFilters, {key: af.key});
+                        return _.find(allFilters, {key: af.key, usual:true});
                     }),
                     function (af) {
-                        return _.find(usualFilters, {key: af.key}).order;
+                        return _.find(allFilters, {key: af.key}).usualOrder;
                     }
                 );
             },
@@ -86,6 +76,7 @@ angular.module('repo.services.FilterService', [])
                         fits = getMatchingFits(product, fits, filter);
                         if (fits.length == 0) {
                             matchAll = false;
+                            break;
                         }
                     }
                     product.fits = fits;

@@ -10,14 +10,11 @@ angular.module('repo.controllers.ProductController', [])
 
             $scope.appliedFilters = UtilService.url2filter($stateParams.filter);
 
-            var usualFilter = FilterService.extractUsualFilter($scope.appliedFilters);
-            //console.log("------------------ usualFilter = " + JSON.stringify(usualFilter, null, 2));
+            var usualFilters = FilterService.extractUsualFilter($scope.appliedFilters);
+            if(usualFilters && usualFilters.length > 0){
+                $scope.usualFilterHumanString = FilterService.getFilterHumanString(usualFilters);
 
-            if(usualFilter && usualFilter.length > 0){
-                $scope.usualFilterHumanString = FilterService.getFilterHumanString(usualFilter);
-                //console.log("------------------ $scope.usualFilterHumanString = " + $scope.usualFilterHumanString);
-
-                var relevant = _.filter(FilterService.getFilteredProducts(UtilService.getAllProducts(), usualFilter),
+                var relevant = _.filter(FilterService.getFilteredProducts(UtilService.getAllProducts(), usualFilters),
                     function(prod){
                         return prod.id != $scope.product.id;
                     }
