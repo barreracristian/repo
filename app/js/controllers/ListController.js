@@ -2,103 +2,123 @@ angular.module('repo.controllers.ListController', [])
     .controller('ListController',
         function ($scope, $stateParams, DBService, UtilService, FilterService) {
 
-            console.log("------------------ $stateParams = " + JSON.stringify($stateParams, null, 2));
+            //console.log("------------------ $stateParams = " + JSON.stringify($stateParams, null, 2));
 
             var allProducts = UtilService.getAllProducts();
-            fillFilterOptions(allProducts);
 
-            $scope.availableFilterOptions = [];
-            $scope.appliedFilters = [];
-            applyFilter($stateParams.kind, $stateParams.value);
-            getAvailableFilters();
+            $scope.appliedFilters = addFilter($stateParams.kind, $stateParams.value, []);
+            $scope.products = filterProducts(allProducts, $scope.appliedFilters);
 
             // ------------------------------------------------
 
             $scope.newFilterSelected = function (filter) {
-                applyFilter(filter.key, 'none');
-                getAvailableFilters();
+                $scope.appliedFilters = addFilter(filter.key, 'none', $scope.appliedFilters);
+                $scope.products = filterProducts(allProducts, $scope.appliedFilters);
             };
 
             $scope.newOptionsSelected = function (filter, option) {
-                applyFilter(filter.key, option);
-                getAvailableFilters();
+                $scope.appliedFilters = addFilter(filter.key, option, $scope.appliedFilters);
+                $scope.products = filterProducts(allProducts, $scope.appliedFilters);
             };
 
             $scope.removeFilter = function (filter) {
-                applyFilter(filter.key, undefined);
-                getAvailableFilters();
+                $scope.appliedFilters = addFilter(filter.key, undefined, $scope.appliedFilters);
+                $scope.products = filterProducts(allProducts, $scope.appliedFilters);
             };
 
-            function applyFilter(key, value) {
+            // ------------------------------------------------
 
+            function addFilter(key, value, filters) {
                 if (!value) {
-                    _.remove($scope.appliedFilters, {key: key});
+                    _.remove(filters, {key: key});
                 } else {
-                    var af = _.find($scope.appliedFilters, {key: key});
+                    var af = _.find(filters, {key: key});
                     if (af) {
                         af.value = value;
                     } else {
-                        $scope.appliedFilters.push({
+                        filters.push({
                             key: key,
                             value: value
                         });
                     }
                 }
-
-                $scope.products = FilterService.getFilteredProducts(allProducts, $scope.appliedFilters);
+                return filters;
             }
 
-            function getAvailableFilters() {
-                fillFilterOptions($scope.products);
+            function filterProducts(products, filters) {
+                var tempProds = products;
+                $scope.filterOptions = [];
+                _.each(filters, function (filter) {
+                    extractOptionsFrom(filter.key, tempProds);
+                    tempProds = FilterService.getFilteredProducts(tempProds, [filter]);
+                    console.log("------------------ prods after " + filter.key + ":" + filter.value + " > " + tempProds.length);
+                });
 
+                var restFilters = _.filter(FilterService.getAllFilters(), function(filter){
+                    return !_.find(filters, {key:filter.key});
+                });
 
+                _.each(restFilters, function(filter){
+                    extractOptionsFrom(filter.key, tempProds);
+                });
 
-                $scope.availableFilterOptions = [];
-                _.forOwn($scope.filterOptions, function (value, key) {
-                    if (!_.find($scope.appliedFilters, {key: key})) {
-                        $scope.availableFilterOptions.push(value);
+                //console.log("------------------ products = " + JSON.stringify(tempProds, null, 2));
+                //console.log("------------------ $scope.filterOptions = " + JSON.stringify($scope.filterOptions, null, 2));
+                //console.log("------------------ $scope.appliedFilters = " + JSON.stringify($scope.appliedFilters, null, 2));
+                //console.log("------------------ products = " + tempProds.length);
+
+                return tempProds;
+            }
+
+            function extractOptionsFrom(key, products) {
+                _.each(products, function (prod) {
+                    if (key == 'type') {
+                        uniqueFilterFill('type', prod.type);
+                    } else {
+                        _.each(prod.fits, function (fit) {
+                            uniqueFilterFill(key, fit[key]);
+                        });
                     }
                 });
-            }
-
-            //
-
-            function fillFilterOptions(products){
-                console.log("------------------ products = " + JSON.stringify(products, null, 2));
-
-                $scope.filterOptions = {};
-
-                console.log("------------------ $scope.filterOptions 1 = " + JSON.stringify($scope.filterOptions, null, 2));
-
-                _.each(FilterService.getAllFilters(), function (filter) {
-                    $scope.filterOptions[filter.key] = {
-                        key: filter.key,
-                        name: filter.name,
-                        options: []
-                    };
-                });
-
-                console.log("------------------ $scope.filterOptions 2 = " + JSON.stringify($scope.filterOptions, null, 2));
-
-                _.each(products, function (prod) {
-                    uniqueFilterFill('type', prod.type);
-                    _.each(prod.fits, function (fit) {
-                        uniqueFilterFill('brand', fit.brand);
-                        uniqueFilterFill('model', fit.model);
-                        uniqueFilterFill('year', fit.years);
-                    });
-                });
-
-                console.log("------------------ $scope.filterOptions 3 = " + JSON.stringify($scope.filterOptions, null, 2));
             }
 
             function uniqueFilterFill(key, item) {
                 var adds = Array.isArray(item) ? item : [item];
                 _.each(adds, function (add) {
-                    if ($scope.filterOptions[key].options.indexOf(add) < 0) {
-                        $scope.filterOptions[key].options.push(add);
+
+                    var found = _.find($scope.filterOptions, {key: key});
+                    if(!found){
+                        found = {key:key, options:[]};
+                        $scope.filterOptions.push(found);
+                    }
+
+                    if (found.options.indexOf(add) < 0) {
+                        found.options.push(add);
                     }
                 });
+            }
+
+            // --- Functiones en el html
+
+            $scope.notApplied = function (filterOption){
+                return !_.find($scope.appliedFilters, {key:filterOption.key});
+            };
+
+            $scope.remainNotApplied = function(filterOptions){
+                for(var i=0; i<filterOptions.length; ++i){
+                    if($scope.notApplied(filterOptions[i])){
+                        return true;
+                    }
+                }
+                return false;
+            };
+
+            $scope.getFilterName = function(key){
+                return (_.find(FilterService.getAllFilters(), {key:key}) || {}).name;
+            };
+
+            $scope.getFilterOptions = function(key){
+                return (_.find($scope.filterOptions, {key:key}) || {}).options;
             }
 
         }

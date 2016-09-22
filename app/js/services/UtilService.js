@@ -53,7 +53,7 @@ angular.module('repo.services.UtilService', [])
                         prod.fits.push({
                             brand: brand.name,
                             model: anyOf(brand.models),
-                            years: years(2 + parseInt(Math.random(10)))
+                            year: years(2 + parseInt(Math.random(10)))
                         });
                     }
 

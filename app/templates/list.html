@@ -53,12 +53,12 @@
                 <li role="presentation" class="dropdown" ng-repeat="af in appliedFilters">
                     <a class="dropdown-toggle" data-toggle="dropdown"
                        role="button" aria-haspopup="true" aria-expanded="false">
-                        <span ng-if="af.value">{{filterOptions[af.key].name}}: {{af.value}}</span>
-                        <span ng-if="!af.value">Elija {{filterOptions[af.key].name}}</span>
+                        <span ng-if="af.value">{{getFilterName(af.key)}}: {{af.value}}</span>
+                        <span ng-if="!af.value">Elija {{getFilterName(af.key)}}</span>
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li ng-repeat="option in filterOptions[af.key].options | orderBy:'toString()'">
+                        <li ng-repeat="option in getFilterOptions(af.key) | orderBy:'toString()'">
                             <a class="submenu" ng-class="{selected:af.value == option}" ng-click="newOptionsSelected(af, option)">{{option}}</a>
                         </li>
                         <li>
@@ -67,14 +67,14 @@
                     </ul>
                 </li>
 
-                <li role="presentation" class="dropdown active" ng-if="availableFilterOptions.length > 0">
+                <li role="presentation" class="dropdown active" ng-if="remainNotApplied(filterOptions)">
                     <a class="dropdown-toggle" data-toggle="dropdown"
                        role="button" aria-haspopup="true" aria-expanded="false">
                         Agregue un filtro <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li ng-repeat="af in availableFilterOptions | orderBy:'name'">
-                            <a class="submenu" ng-click="newFilterSelected(af)">{{af.name}}</a>
+                        <li ng-repeat="fo in filterOptions | orderBy:'name'" ng-if="notApplied(fo)">
+                            <a class="submenu" ng-click="newFilterSelected(fo)">{{getFilterName(fo.key)}}</a>
                         </li>
                     </ul>
                 </li>

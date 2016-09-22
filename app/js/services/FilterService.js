@@ -48,7 +48,7 @@ angular.module('repo.services.FilterService', [])
                 );
             },
             getFilteredProducts: function (products, filters) {
-                console.log("------------------ getFilteredProducts = " + JSON.stringify(filters, null, 2));
+                //console.log("------------------ getFilteredProducts = " + JSON.stringify(filters, null, 2));
 
                 return _.filter(_.cloneDeep(products), function (product) {
 
@@ -67,12 +67,12 @@ angular.module('repo.services.FilterService', [])
                      {
                      brand: Toyota
                      model: Yaris
-                     years: [2025,3525,2324]
+                     year: [2025,3525,2324]
                      },
                      {
                      brand: Toyota
                      model: V16
-                     years: [2025,3525,2324]
+                     year: [2025,3525,2324]
                      }
                      */
 
@@ -92,7 +92,7 @@ angular.module('repo.services.FilterService', [])
 
                     function getMatchingFits(product, fits, filter) {
                         if (filter.key == 'type') {
-                            if (product.type == filter.value) {
+                            if (filter.value == 'none' || product.type == filter.value) {
                                 return fits;
                             } else {
                                 return [];
@@ -103,9 +103,17 @@ angular.module('repo.services.FilterService', [])
                         for (var j = 0; j < fits.length; ++j) {
                             var fit = fits[j];
 
-                            if (fit[filter.key] == filter.value || filter.value == 'none') {
-                                matchingFits.push(fit);
+                            if(filter.key == 'year'){ //es especial porque es un arreglo
+                                if (filter.value == 'none' || fit['year'].indexOf(filter.value) >= 0) {
+                                    fit.year = [filter.value];
+                                    matchingFits.push(fit);
+                                }
+                            }else{
+                                if (fit[filter.key] == filter.value || filter.value == 'none') {
+                                    matchingFits.push(fit);
+                                }
                             }
+
                         }
                         return matchingFits;
                     }
