@@ -41,7 +41,7 @@ app.run(
                 controller: "ContactController"
             })
             .state('list', {
-                url: "/list/:kind/:value",
+                url: "/list/:key/:value",
                 templateUrl: 'templates/list.html',
                 controller: "ListController"
             })

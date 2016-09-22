@@ -48,7 +48,7 @@
                         <div class="col-sm-3"
                              ng-repeat="cat in section.categories">
                             <div class="category">
-                                <a href="#/list/{{cat.kind}}/{{cat.value}}">
+                                <a href="#/list/{{cat.key}}/{{cat.value}}">
                                     <img ng-src="img/{{cat.img}}" alt="">
                                 </a>
                                 <div class="cat-title">{{cat.name}}</div>
@@ -56,7 +56,7 @@
                         </div>
                         <div class="col-sm-3">
                             <div class="category">
-                                <a class="another" href="#/list/{{section.categories[0].kind}}/none">
+                                <a class="another" href="#/list/{{section.categories[0].key}}/none">
                                    {{section.another}}
                                 </a>
                             </div>

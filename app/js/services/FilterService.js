@@ -167,7 +167,10 @@ angular.module('repo.services.FilterService', [])
         };
 
         function isMatch(arg1, arg2) {
-            //console.log("------------------ " + arg1 + " & " + arg2);
+            console.log("------------------ " + arg1 + " & " + arg2);
+            if(!arg1){
+                return false;
+            }
 
             if (Array.isArray(arg1)) {
                 return arg1.toString().toLowerCase().indexOf(arg2.toString().toLowerCase()) >= 0;

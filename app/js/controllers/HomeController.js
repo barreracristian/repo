@@ -8,7 +8,7 @@ angular.module('repo.controllers.HomeController', [])
                     another: 'Elegir otra marca',
                     categories: _.map(UtilService.getHomeBrands(), function(brand){
                         return {
-                            kind:'brand', name:brand.name, value:brand.name, img:brand.img
+                            key:'brand', name:brand.name, value:brand.name, img:brand.img
                         };
                     })
                 },
@@ -17,7 +17,7 @@ angular.module('repo.controllers.HomeController', [])
                     another:'Elegir otro tipo',
                     categories: _.map(UtilService.getHomeTypes(), function(type){
                         return {
-                            kind:'type', name:type.name, value:type.type, img:type.img
+                            key:'type', name:type.name, value:type.type, img:type.img
                         };
                     })
                 }

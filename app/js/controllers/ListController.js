@@ -7,7 +7,7 @@ angular.module('repo.controllers.ListController', [])
             var allProducts = UtilService.getAllProducts();
 
             if($stateParams.key && $stateParams.value){
-                $scope.appliedFilters = addFilter($stateParams.kind, $stateParams.value, []);
+                $scope.appliedFilters = addFilter($stateParams.key, $stateParams.value, []);
             }else if($stateParams.filter){
                 $scope.appliedFilters = UtilService.url2filter($stateParams.filter);
             }
