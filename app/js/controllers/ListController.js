@@ -2,11 +2,16 @@ angular.module('repo.controllers.ListController', [])
     .controller('ListController',
         function ($scope, $stateParams, DBService, UtilService, FilterService) {
 
-            //console.log("------------------ $stateParams = " + JSON.stringify($stateParams, null, 2));
+            console.log("------------------ $stateParams = " + JSON.stringify($stateParams, null, 2));
 
             var allProducts = UtilService.getAllProducts();
 
-            $scope.appliedFilters = addFilter($stateParams.kind, $stateParams.value, []);
+            if($stateParams.key && $stateParams.value){
+                $scope.appliedFilters = addFilter($stateParams.kind, $stateParams.value, []);
+            }else if($stateParams.filter){
+                $scope.appliedFilters = UtilService.url2filter($stateParams.filter);
+            }
+
             $scope.products = filterProducts(allProducts, $scope.appliedFilters);
 
             // ------------------------------------------------

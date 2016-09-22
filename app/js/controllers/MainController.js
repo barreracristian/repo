@@ -1,6 +1,6 @@
 angular.module('repo.controllers.MainController', [])
     .controller('MainController',
-        function ($scope, $state, $location, CartService, UtilService) {
+        function ($scope, $state, $location, CartService, UtilService, FilterService) {
 
             $scope.isActive = function(str){
                 return str == $location.path();
@@ -24,6 +24,14 @@ angular.module('repo.controllers.MainController', [])
 
             $scope.search = function(){
                 var searchstring = $scope.data.search;
+                //console.log("------------------ searchstring = " + searchstring);
+
+                var filters = FilterService.getFiltersFromSearch(searchstring, UtilService.getAllProducts());
+                //console.log("------------------ filters = " + JSON.stringify(filters, null, 2));
+
+                $state.go("search", {
+                    filter: UtilService.filter2url(filters)
+                });
             }
 
         }

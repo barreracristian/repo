@@ -3,26 +3,26 @@ angular.module('repo.services.FilterService', [])
 
         var allFilters = [
             {
-                key:'brand',
-                name:'Marca',
-                usual:true,
-                usualOrder:1
+                key: 'brand',
+                name: 'Marca',
+                usual: true,
+                usualOrder: 1
             },
             {
-                key:'model',
-                name:'Modelo',
-                usual:true,
-                usualOrder:2
+                key: 'model',
+                name: 'Modelo',
+                usual: true,
+                usualOrder: 2
             },
             {
-                key:'year',
-                name:'Año',
-                usual:true,
-                usualOrder:3
+                key: 'year',
+                name: 'Año',
+                usual: true,
+                usualOrder: 3
             },
             {
-                key:'type',
-                name:'Tipo'
+                key: 'type',
+                name: 'Tipo'
             }
         ];
 
@@ -30,7 +30,7 @@ angular.module('repo.services.FilterService', [])
             extractUsualFilter: function (appliedFilters) {
                 return _.sortBy(_.filter(appliedFilters,
                     function (af) {
-                        return _.find(allFilters, {key: af.key, usual:true});
+                        return _.find(allFilters, {key: af.key, usual: true});
                     }),
                     function (af) {
                         return _.find(allFilters, {key: af.key}).usualOrder;
@@ -83,7 +83,7 @@ angular.module('repo.services.FilterService', [])
 
                     function getMatchingFits(product, fits, filter) {
                         if (filter.key == 'type') {
-                            if (filter.value == 'none' || product.type == filter.value) {
+                            if (filter.value == 'none' || isMatch(product.type, filter.value)) {
                                 return fits;
                             } else {
                                 return [];
@@ -94,15 +94,8 @@ angular.module('repo.services.FilterService', [])
                         for (var j = 0; j < fits.length; ++j) {
                             var fit = fits[j];
 
-                            if(filter.key == 'year'){ //es especial porque es un arreglo
-                                if (filter.value == 'none' || fit['year'].indexOf(filter.value) >= 0) {
-                                    fit.year = [filter.value];
-                                    matchingFits.push(fit);
-                                }
-                            }else{
-                                if (fit[filter.key] == filter.value || filter.value == 'none') {
-                                    matchingFits.push(fit);
-                                }
+                            if (isMatch(fit[filter.key], filter.value) || filter.value == 'none') {
+                                matchingFits.push(fit);
                             }
 
                         }
@@ -113,20 +106,74 @@ angular.module('repo.services.FilterService', [])
                 });
             },
             getFilterHumanString: function (filters) {
-                var fhs =_.map(filters, function (f) {
+                var fhs = _.map(filters, function (f) {
                     return f.value;
                 }).join(" ").trim();
 
-                if(!fhs || fhs.length == 0){
+                if (!fhs || fhs.length == 0) {
                     return undefined;
-                }else{
+                } else {
                     return fhs;
                 }
             },
-            getAllFilters: function(){
+            getAllFilters: function () {
                 return allFilters;
+            },
+            getFiltersFromSearch: function (search, products) {
+                var splits = search.toLowerCase().split(" ");
+                var filters = [];
+
+                _.each(splits, function (split) {
+                    split = split.trim();
+                    if (split.length > 1) {
+                        var found = false;
+                        //console.log("------------------ split = " + split);
+
+                        _.each(products, function (prod) {
+                            //Puede calzar con cualquiera de los allFilters
+                            if (isMatch(prod.type, split)) {
+                                safePush(filters, {key: 'type', value: split});
+                                found = true;
+                            } else {
+                                _.each(prod.fits, function (fit) {
+                                    _.forOwn(fit, function (value, key) {
+                                        if (isMatch(value, split)) {
+                                            safePush(filters, {key: key, value: split});
+                                            found = true;
+                                        }
+                                    })
+                                })
+                            }
+
+
+                        });
+
+                        if(!found){
+                            safePush(filters, {key: 'none', value: split});
+                        }
+                    }
+                });
+
+                function safePush(arr, obj) {
+                    if (!_.find(arr, {key: obj.key})) {
+                        arr.push(obj);
+                    }
+                }
+
+
+
+                return filters;
+            }
+        };
+
+        function isMatch(arg1, arg2) {
+            //console.log("------------------ " + arg1 + " & " + arg2);
+
+            if (Array.isArray(arg1)) {
+                return arg1.toString().toLowerCase().indexOf(arg2.toString().toLowerCase()) >= 0;
+            } else {
+                return arg1.toLowerCase() == arg2.toString().toLowerCase();
             }
         }
-
 
     });

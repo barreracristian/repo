@@ -45,6 +45,11 @@ app.run(
                 templateUrl: 'templates/list.html',
                 controller: "ListController"
             })
+            .state('search', {
+                url: "/search/:filter",
+                templateUrl: 'templates/list.html',
+                controller: "ListController"
+            })
             .state('product', {
                 url: "/product/:sku/:filter",
                 templateUrl: 'templates/product.html',
