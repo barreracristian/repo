@@ -43,51 +43,47 @@
 
     .cabeza {
         background-color: #48768B;
-        _border:1px solid red;
         padding-top:30px;
         padding-bottom:30px;
     }
 
-    .cabeza .container{
+    .blue{
         _border:1px solid blue;
     }
 
-    .loguito{
+    .green{
         _border:1px solid yellow;
-    }
-
-    .loguito img{
-        height:60px;
     }
 
     /* ---------- */
 
-    .carrito{
+    .cart{
         background-color: #FF6C14;
         color:white;
         padding:10px;
         text-transform: uppercase;
-        position: absolute;
-        right:0;
         height:60px;
     }
 
-    .carrito div{
-        display: inline;
-    }
-
-    .carrito .glyphicon-shopping-cart{
-        font-size: 30px;
-    }
-
-    .carrito .detail{
-        padding-left: 10px;
-        padding-right: 10px;
-    }
-
-    .carrito .btn{
+    .cart .btn{
         text-align: center;
         text-transform: uppercase;
+    }
+
+    /* ------- */
+
+    .searchbox{
+        height:60px;
+        padding:10px 0;
+    }
+    .searchbox .searchinpunt{
+        background-color: white;
+        height:40px;
+    }
+
+    .searchinpunt input{
+        border:none;
+        height:40px;
     }
 
 </style>
@@ -97,50 +93,75 @@
 <div class="row cabeza">
     <div class="col col-md-12">
         <div class="container">
+
             <div class="row">
-                <div class="col col-md-6" style="text-align: left">
-                    <div class="loguito">
-                        <a href="#"><img src="img/logo.png" alt=""></a>
+                <div class="col col-md-3" style="text-align: left">
+                    <table style="width: 100%">
+                        <tr>
+                            <td style="text-align: left">
+                                <a href="#"><img src="img/logo_sqare.png" style="height: 60px;" alt=""></a>
+                            </td>
+                            <td style="text-align: right">
+                                <a href="#"><img src="img/logo_word.png" style="height: 60px;" alt=""></a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col col-md-1 col-sm hidden-sm hidden-xs green"></div>
+                <div class="col col-md-4 blue" style="text-align: center">
+                    <div class="searchbox">
+                        <div class="searchinpunt">
+                            <form>
+                                <input type="text" class="form-control" placeholder="Busqueda" ng-model="data.search">
+                                <button type="submit" class="btn btn-default" ng-click="search()" style="display: none;">Buscar</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
-                <div class="col col-md-6" style="text-align: right">
+                <div class="col col-md-1 col-sm hidden-sm hidden-xs green"></div>
+                <div class="col col-md-3" style="text-align: right">
 
-                    <div class="carrito">
-                        <table>
+                    <div class="cart">
+                        <table style="width: 100%">
                             <tr>
-                                <td><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></td>
-                                <td class="detail">
+                                <td width="1" style="padding: 0;">
+                                    <span class="glyphicon glyphicon-shopping-cart"
+                                          style="font-size: 30px; padding-top: 4px" aria-hidden="true"></span>
+                                </td>
+                                <td style="padding: 0;">
                                     <span>{{cart.getProductsCount()}} productos</span>
                                     <br>
                                     <span>Total: {{cart.getTotal() | currency:$:0}}</span>
                                 </td>
-                                <td>
+                                <td width="90" style="padding: 0 0 0 10px;">
                                     <button class="btn btn-default btn-block" type="submit" ng-click="showCart()">Comprar</button>
                                 </td>
                             </tr>
                         </table>
                     </div>
+
                 </div>
             </div>
+
         </div>
     </div>
 </div>
 
-<div class="row menu">
+<div class="row menu hidden-sm hidden-xs">
     <div class="col col-md-12">
         <div class="container">
             <ul class="nav nav-pills nav-justified">
                 <li role="presentation" ng-class="{active:isActive('/home')}"><a href="#/home">Home</a></li>
                 <li role="presentation" ng-class="{active:isActive('/company')}"><a href="#/company">Empresa</a></li>
                 <li role="presentation" ng-class="{active:isActive('/contact')}"><a href="#/contact">Contacto</a></li>
-                <li style="text-align: right; border-right: none;">
+                <!--li style="text-align: right; border-right: none;">
                     <form class="navbar-form" style="margin:0; padding-right: 0;">
                         <div class="form-group">
                             <input type="text" class="form-control" placeholder="Busqueda" ng-model="data.search">
                         </div>
                         <button type="submit" class="btn btn-default" ng-click="search()">Buscar</button>
                     </form>
-                </li>
+                </li-->
             </ul>
 
         </div>
