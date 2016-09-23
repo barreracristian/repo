@@ -54,7 +54,7 @@ angular.module('repo.controllers.ListController', [])
                 var tempProds = products;
                 $scope.filterOptions = [];
                 _.each(filters, function (filter) {
-                    extractOptionsFrom(filter.key, tempProds);
+                    $scope.filterOptions = FilterService.extractOptionsFrom(filter.key, tempProds, $scope.filterOptions);
                     tempProds = FilterService.getFilteredProducts(tempProds, [filter]);
                     console.log("------------------ prods after " + filter.key + ":" + filter.value + " > " + tempProds.length);
                 });
@@ -64,7 +64,7 @@ angular.module('repo.controllers.ListController', [])
                 });
 
                 _.each(restFilters, function(filter){
-                    extractOptionsFrom(filter.key, tempProds);
+                    $scope.filterOptions = FilterService.extractOptionsFrom(filter.key, tempProds, $scope.filterOptions);
                 });
 
                 //console.log("------------------ products = " + JSON.stringify(tempProds, null, 2));
@@ -73,34 +73,6 @@ angular.module('repo.controllers.ListController', [])
                 //console.log("------------------ products = " + tempProds.length);
 
                 return tempProds;
-            }
-
-            function extractOptionsFrom(key, products) {
-                _.each(products, function (prod) {
-                    if (key == 'type') {
-                        uniqueFilterFill('type', prod.type);
-                    } else {
-                        _.each(prod.fits, function (fit) {
-                            uniqueFilterFill(key, fit[key]);
-                        });
-                    }
-                });
-            }
-
-            function uniqueFilterFill(key, item) {
-                var adds = Array.isArray(item) ? item : [item];
-                _.each(adds, function (add) {
-
-                    var found = _.find($scope.filterOptions, {key: key});
-                    if(!found){
-                        found = {key:key, options:[]};
-                        $scope.filterOptions.push(found);
-                    }
-
-                    if (found.options.indexOf(add) < 0) {
-                        found.options.push(add);
-                    }
-                });
             }
 
             // --- Functiones en el html

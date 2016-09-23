@@ -148,7 +148,7 @@ angular.module('repo.services.FilterService', [])
 
                         });
 
-                        if(!found){
+                        if (!found) {
                             safePush(filters, {key: 'none', value: split});
                         }
                     }
@@ -161,14 +161,42 @@ angular.module('repo.services.FilterService', [])
                 }
 
 
-
                 return filters;
+            },
+            extractOptionsFrom: function (key, products, filterOptions) {
+                _.each(products, function (prod) {
+                    if (key == 'type') {
+                        filterOptions = uniqueFilterFill('type', prod.type, filterOptions);
+                    } else {
+                        _.each(prod.fits, function (fit) {
+                            filterOptions = uniqueFilterFill(key, fit[key], filterOptions);
+                        });
+                    }
+                });
+                return filterOptions;
             }
         };
 
+        function uniqueFilterFill(key, item, filterOptions) {
+            var adds = Array.isArray(item) ? item : [item];
+            _.each(adds, function (add) {
+
+                var found = _.find(filterOptions, {key: key});
+                if (!found) {
+                    found = {key: key, options: []};
+                    filterOptions.push(found);
+                }
+
+                if (found.options.indexOf(add) < 0) {
+                    found.options.push(add);
+                }
+            });
+            return filterOptions;
+        }
+
         function isMatch(arg1, arg2) {
             console.log("------------------ " + arg1 + " & " + arg2);
-            if(!arg1){
+            if (!arg1) {
                 return false;
             }
 

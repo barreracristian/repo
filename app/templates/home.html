@@ -20,6 +20,12 @@
         padding-top: 45px;
         color: #525252;
     }
+
+    .another .btn{
+        border: none;
+        font-size: 24px;
+    }
+
     .cat-title{
         font-size: medium;
         position: absolute;
@@ -56,9 +62,23 @@
                         </div>
                         <div class="col-sm-3">
                             <div class="category">
-                                <a class="another" href="#/list/{{section.categories[0].key}}/none">
+                                <!--a class="another" href="#/list/{{section.categories[0].key}}/none">
                                    {{section.another}}
-                                </a>
+                                </a-->
+
+                                <div class="another dropdown">
+                                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                        {{section.another}}
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" style="top: auto; left: calc(50% - 80px)">
+                                        <li ng-repeat="option in options[section.key]">
+                                            <a href="#/list/{{section.key}}/{{option}}">{{option}}</a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+
                             </div>
                         </div>
                     </div>
