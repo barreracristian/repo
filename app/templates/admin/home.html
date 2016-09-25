@@ -1,7 +1,74 @@
 
-<div class="micontenedor" data-ng-init="setCurrent('home')">
+<style>
+    .box{
+        background-color: white;
+        border-radius: 4px;
+        padding:5px 10px;
+        margin:10px;
+    }
+</style>
 
-    HOME
+
+<div class="container" data-ng-init="setCurrent('home')">
+
+   <div class="row">
+       <div class="col col-md-8">
+
+           <div class="box">
+               <h3>Últimas Ordenes</h3>
+
+               <table class="table table-condensed table-hover">
+                   <tr>
+                       <th>id</th>
+                       <th>Fecha</th>
+                       <th>Cliente</th>
+                       <th>Monto</th>
+                       <th>Estado</th>
+                   </tr>
+                   <tr ng-repeat="order in lastOrders | orderBy: '-id'">
+                       <td>{{order.id}}</td>
+                       <td>{{order.date | fhDate}}</td>
+                       <td>{{order.client_id}}</td>
+                       <td>{{order.ammount | money}}</td>
+                       <td>{{order.status}}</td>
+                   </tr>
+               </table>
+           </div>
+
+           <div class="box">
+               <h3>Últimos Clientes</h3>
+
+               <table class="table table-condensed table-hover">
+                   <tr>
+                       <th>id</th>
+                       <th>Fecha</th>
+                       <th>Cliente</th>
+                       <th>Teléfono</th>
+                       <th>Estado</th>
+                   </tr>
+                   <tr ng-repeat="client in lastClients | orderBy: '-id'">
+                       <td>{{client.id}}</td>
+                       <td>{{client.date | fhDate}}</td>
+                       <td>{{clients[client.client_id].name}} {{clients[client.client_id].lastname}}</td>
+                       <td>{{client.mobile_number | mobile}}</td>
+                       <td>{{client.status}}</td>
+                   </tr>
+               </table>
+           </div>
+
+       </div>
+       <div class="col col-md-4">
+           <div class="box">
+               <h3>Stats</h3>
+           </div>
+           <div class="box">
+               <h3>Acciones</h3>
+           </div>
+           <div class="box">
+               <h3>Productos</h3>
+           </div>
+       </div>
+   </div>
 
 </div>
 

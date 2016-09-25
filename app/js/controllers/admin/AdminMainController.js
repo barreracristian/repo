@@ -1,6 +1,6 @@
 angular.module('repo.controllers.admin.AdminMainController', [])
     .controller('AdminMainController',
-        function ($scope, $state) {
+        function ($scope, $rootScope, $state) {
 
             // Current
 
@@ -13,6 +13,8 @@ angular.module('repo.controllers.admin.AdminMainController', [])
             $scope.setCurrent = function(page){
                 $scope.current = page;
             };
+
+            $rootScope.loading = 0;
 
             //
 
