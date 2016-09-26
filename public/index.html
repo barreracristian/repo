@@ -82,8 +82,23 @@
     }
 
     .searchinpunt input{
-        border:none;
+        display: inline-block;
+        float:left;
+        width:calc(100% - 50px);
         height:40px;
+        border:none;
+        border-radius:0;
+    }
+
+    .searchinpunt span{
+        display: inline-block;
+        float: right;
+        width: 50px;
+        height: 40px;
+        font-size: 30px;
+        cursor: pointer;
+        padding-top: 3px;
+        color: #C8C8C8;
     }
 
 </style>
@@ -111,9 +126,11 @@
                 <div class="col col-md-4 blue" style="text-align: center">
                     <div class="searchbox">
                         <div class="searchinpunt">
-                            <form>
+                            <form style="white-space: nowrap">
                                 <input type="text" class="form-control" placeholder="Busqueda" ng-model="data.search">
-                                <button type="submit" class="btn btn-default" ng-click="search()" style="display: none;">Buscar</button>
+                                <span type="submit" class="glyphicon glyphicon-search"
+                                      ng-click="search()" aria-hidden="true"></span>
+                                <button type="submit" ng-click="search()" style="display: none;"></button>
                             </form>
                         </div>
                     </div>

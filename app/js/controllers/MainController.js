@@ -26,12 +26,14 @@ angular.module('repo.controllers.MainController', [])
                 var searchstring = $scope.data.search;
                 //console.log("------------------ searchstring = " + searchstring);
 
-                var filters = FilterService.getFiltersFromSearch(searchstring, UtilService.getAllProducts());
-                //console.log("------------------ filters = " + JSON.stringify(filters, null, 2));
+                if(searchstring.trim().length > 2){
+                    var filters = FilterService.getFiltersFromSearch(searchstring, UtilService.getAllProducts());
+                    //console.log("------------------ filters = " + JSON.stringify(filters, null, 2));
 
-                $state.go("search", {
-                    filter: UtilService.filter2url(filters)
-                });
+                    $state.go("search", {
+                        filter: UtilService.filter2url(filters)
+                    });
+                }
             }
 
         }

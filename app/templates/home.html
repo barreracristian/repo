@@ -71,9 +71,9 @@
                                         {{section.another}}
                                         <span class="caret"></span>
                                     </button>
-                                    <ul class="dropdown-menu" style="top: auto; left: calc(50% - 80px)">
+                                    <ul class="dropdown-menu" style="top: auto; left: calc(50% - 80px); font-size: 20px;">
                                         <li ng-repeat="option in options[section.key]">
-                                            <a href="#/list/{{section.key}}/{{option}}">{{option}}</a>
+                                            <a href="#/list/{{section.key}}/{{option}}">{{option | capitalize}}</a>
                                         </li>
                                     </ul>
                                 </div>
