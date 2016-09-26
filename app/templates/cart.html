@@ -18,6 +18,12 @@
         padding:20px;
     }
 
+    .checkout-step-small{
+        background-color: #F9F9F9;
+        border-bottom:1px solid #DDD;
+        padding:10px;
+    }
+
     .option-box{
         margin: 10px 5px 20px 5px;
         padding: 10px;
@@ -97,19 +103,19 @@
                     <div class="row">
                         <div class="col col-md-12" style="margin-top: 10px;">
                             <div class="form-group">
-                                <label for="telefono" class="col-sm-2 control-label">Direccion</label>
+                                <label for="email" class="col-sm-4 control-label">Correo Electrónico</label>
 
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="telefono" ng-model="data.authentication.mobile_number"
-                                           placeholder="Numero de teléfono">
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" id="email" ng-model="data.authentication.email"
+                                           placeholder="Correo electrónico">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="clave" class="col-sm-2 control-label">Clave</label>
+                                <label for="clave" class="col-sm-4 control-label">Celular</label>
 
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="clave" ng-model="data.authentication.password"
-                                           placeholder="Clave alfanumérica">
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" id="clave" ng-model="data.authentication.mobile_number"
+                                           placeholder="Teléfono Celular">
                                 </div>
                             </div>
                         </div>
@@ -124,52 +130,37 @@
                     </div>
 
                 </div>
+                <div class="checkout-step-small" ng-show="['delivery', 'payment', 'resumen'].indexOf(checkoutStep) >= 0">
+                    <span><b>Sus Datos:</b> {{data.authentication.email}} {{data.authentication.mobile_number}}</span>
+                </div>
+
 
                 <div class="checkout-step" ng-show="checkoutStep == 'delivery'">
 
-                    <div class="title">Elija su despacho</div>
+                    <div class="title">Dirección de despacho</div>
 
                     <div class="row">
-                        <div class="col col-md-6" style="padding: 5px;">
-                            <button type="button" class="btn btn-block"
-                                    ng-class="{'btn-selected': data.delivery.type == 'taller', 'btn-default': data.delivery.type != 'taller'}"
-                                    ng-click="data.delivery.type = 'taller'">Retiro en Taller</button>
-                        </div>
-                        <div class="col col-md-6" style="padding: 5px;">
-                            <button type="button" class="btn btn-block"
-                                    ng-class="{'btn-selected': data.delivery.type == 'domicilio', 'btn-default': data.delivery.type != 'domicilio'}"
-                                    ng-click="data.delivery.type = 'domicilio'">Despacho a Domicilio</button>
-                        </div>
-                    </div>
-
-                    <div class="row" ng-if="data.delivery.type == 'taller'">
-                        <div class="col col-md-12">
-                            <div class="radio option-box"
-                                 ng-class="{selected: data.delivery.tallerId == address.id}"
-                                 ng-repeat="address in talleres">
-                                <label>
-                                    <input type="radio" name="talleresRadios" value="{{address.id}}" ng-model="data.delivery.tallerId">
-                                    <div>{{address.street}} {{address.number}}, {{address.detail}}</div>
-                                    <div>{{address.commune}}</div>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row" ng-if="data.delivery.type == 'domicilio'">
                         <div class="col col-md-12" style="margin-top: 10px;">
                             <div class="form-group">
-                                <label for="address" class="col-sm-2 control-label">Direccion</label>
+                                <label for="street" class="col-sm-4 control-label">Dirección</label>
 
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="address" ng-model="data.delivery.address"
-                                           placeholder="Direccion">
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" id="street" ng-model="data.delivery.street"
+                                           placeholder="Av. Matta 567">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="commune" class="col-sm-2 control-label">Comuna</label>
+                                <label for="detail" class="col-sm-4 control-label"></label>
 
-                                <div class="col-sm-10">
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" id="detail" ng-model="data.delivery.apt"
+                                           placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="commune" class="col-sm-4 control-label">Comuna</label>
+
+                                <div class="col-sm-8">
                                     <select id="commune" class="form-control" ng-model="data.delivery.commune">
                                         <option value="Santiago">Santiago</option>
                                         <option value="Macul">Macul</option>
@@ -192,21 +183,20 @@
                     </div>
 
                 </div>
+                <div class="checkout-step-small" ng-show="['payment', 'resumen'].indexOf(checkoutStep) >= 0">
+                    <span><b>Dirección de Despacho:</b> {{data.delivery.street}} {{data.delivery.apt}} {{data.delivery.commune}}</span>
+                </div>
+
 
                 <div class="checkout-step" ng-show="checkoutStep == 'payment'">
 
                     <div class="title">Elija su metodo de pago</div>
 
                     <div class="row">
-                        <div class="col col-md-6" style="padding: 5px;">
+                        <div class="col col-md-4" style="padding: 5px;" ng-repeat="a in ['transferencia','efectivo', 'webpay']">
                             <button type="button" class="btn btn-block"
-                                    ng-class="{'btn-selected': data.payment.type == 'transferencia', 'btn-default': data.payment.type != 'transferencia'}"
-                                    ng-click="data.payment.type = 'transferencia'">Transferencia Bancaria</button>
-                        </div>
-                        <div class="col col-md-6" style="padding: 5px;">
-                            <button type="button" class="btn btn-block"
-                                    ng-class="{'btn-selected': data.payment.type == 'taller', 'btn-default': data.payment.type != 'taller'}"
-                                    ng-click="data.payment.type = 'taller'">Pago en Taller</button>
+                                    ng-class="{'btn-selected': data.payment.type == a, 'btn-default': data.payment.type != a}"
+                                    ng-click="data.payment.type = a">{{a == 'transferencia' ? 'Transferencia Bancaria' : (a == 'efectivo' ? 'Efectivo contra entrega' : 'Webpay')}}</button>
                         </div>
                     </div>
 
@@ -239,23 +229,19 @@
                         </div>
                     </div>
 
-                    <div class="row" ng-if="data.payment.type == 'taller'">
+                    <div class="row" ng-if="data.payment.type == 'efectivo'">
                         <div class="col col-md-12">
                             <div class="option-box selected">
-                                <table>
-                                    <tr>
-                                        <th>Dirección</th>
-                                        <td>{{getTaller(data.delivery.tallerId).street}} {{getTaller(data.delivery.tallerId).number}}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Detalle</th>
-                                        <td>{{getTaller(data.delivery.tallerId).detail}}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Comuna</th>
-                                        <td>{{getTaller(data.delivery.tallerId).commune}}</td>
-                                    </tr>
-                                </table>
+                                El pago se realizará el momento de la entrega en la dirección indicada.
+                                El pago será en efectivo.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" ng-if="data.payment.type == 'webpay'">
+                        <div class="col col-md-12">
+                            <div class="option-box selected">
+                                Aun no contamos con este medio, por favor elegir alguno de los otros 2
                             </div>
                         </div>
                     </div>
@@ -273,6 +259,10 @@
                     </div>
 
                 </div>
+                <div class="checkout-step-small" ng-show="['resumen'].indexOf(checkoutStep) >= 0">
+                    <span><b>Método de pago:</b> {{data.payment.type}}</span>
+                </div>
+
 
                 <div class="checkout-step" ng-show="checkoutStep == 'resumen'">
 
@@ -288,6 +278,10 @@
                                 <tr>
                                     <th>Despacho</th>
                                     <td class="right">{{cart.deliveryCost | currency:$:0}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Promoción por Inauguración</th>
+                                    <td class="right">{{-1 * cart.deliveryCost | currency:$:0}}</td>
                                 </tr>
                                 <tr class="subtotal">
                                     <td>Total a pagar</td>
@@ -317,8 +311,8 @@
         <div class="row" style="margin-top: 30px;" ng-if="checkoutStep == 'finished'">
             <div class="jumbotron" style="background-color: white">
                 <h1>Compra Finalizada</h1>
-                <p>Te hemos enviado un correo a afsdgsg@gmail.com con los detalles de tu compra.</p>
-                <p>Gracias por comprar en <b>megarespuestos</b></p>
+                <p>Te hemos enviado un correo a <b>afsdgsg@gmail.com</b> con los detalles de tu compra.</p>
+                <p>Gracias por comprar en <b>Megarespuestos</b></p>
                 <p><a class="btn btn-primary btn-lg" href="#" role="button">Volver al Inicio</a></p>
             </div>
         </div>

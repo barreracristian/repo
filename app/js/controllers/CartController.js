@@ -22,20 +22,8 @@ angular.module('repo.controllers.CartController', [])
 
             //Chekout Steps
 
-            $scope.checkoutStep = 'authentication'; //authentication, delivery, payment, resumen, finished
+            $scope.checkoutStep = 'payment'; //authentication, delivery, payment, resumen, finished
             $scope.data = {delivery: {}, payment: {}, authentication: {}};
-            var costs = {
-                delivery: [
-                    {
-                        type: 'taller',
-                        cost: 0
-                    },
-                    {
-                        type: 'domicilio',
-                        cost: 23523
-                    }
-                ]
-            };
 
             $scope.changeCheckoutStep = function (to) {
                 if ($scope.goodToGoTo(to)) {
@@ -58,22 +46,18 @@ angular.module('repo.controllers.CartController', [])
             $scope.goodToGoTo = function (what) {
                 //payment
                 if (what == 'delivery') {
-                    if ($scope.data.authentication.mobile_number && $scope.data.authentication.password) {
+                    if ($scope.data.authentication.mobile_number && $scope.data.authentication.email) {
                         return true;
                     }
                     return false;
                 } else if (what == 'payment') {
-                    if ($scope.data.delivery.type == 'taller' && $scope.data.delivery.tallerId) {
-                        return true;
-                    }
-                    if ($scope.data.delivery.type == 'domicilio' &&
-                        $scope.data.delivery.address &&
+                    if ($scope.data.delivery.street && $scope.data.delivery.apt &&
                         $scope.data.delivery.commune) {
                         return true;
                     }
                     return false;
                 } else if (what == 'resumen') {
-                    if ($scope.data.payment.type == 'transferencia' || $scope.data.payment.type == 'taller') {
+                    if (['transferencia', 'efectivo'].indexOf($scope.data.payment.type) >= 0) {
                         return true;
                     }
                     return false;

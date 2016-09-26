@@ -3,7 +3,7 @@ angular.module('repo.services.CartService', [])
 
         var theCart = {
             products: [],
-            deliveryCost: 0,
+            deliveryCost: 3000,
             //
             addProduct: function addProduct(product, quantity) {
                 quantity = quantity || 1;
@@ -48,7 +48,7 @@ angular.module('repo.services.CartService', [])
                     sum += prod.quantity * prod.price;
                 });
 
-                return sum + theCart.deliveryCost;
+                return sum + theCart.deliveryCost - theCart.deliveryCost;
             },
             getProductsCount: function getProductsCount(){
                 var sum = 0;
