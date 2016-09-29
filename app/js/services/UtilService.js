@@ -61,7 +61,7 @@ angular.module('repo.services.UtilService', [])
                         type: productFamily.type,
                         description: 'Loren Ipsum adg egkznv sg sdgwedg sdgg',
                         img: "products/" + item + '.jpg',
-                        price: 1000 + Math.random() * 20000,
+                        price: 1000 + parseInt(Math.random() * 20000),
                         fits: []
                     };
 

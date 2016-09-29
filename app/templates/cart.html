@@ -50,6 +50,28 @@
     }
 
 
+    .radio{
+        margin: 10px 5px 20px 5px;
+        padding: 10px;
+        border:1px solid #DAE4E8;
+        border-radius: 5px;
+    }
+
+    .radio-address label{
+        width: 100%;
+        padding-left: 30px;
+    }
+
+    .radio-address label input{
+        margin-left: -25px !important;
+    }
+
+    .radio-address.selected{
+        border:1px solid #BBCCD4;
+        background-color: #DAE4E8;
+    }
+
+
 
 </style>
 
@@ -130,8 +152,42 @@
                     </div>
 
                 </div>
+                <div class="checkout-step" ng-show="checkoutStep == 'authentication-new'">
+
+                    <div class="title">Sus datos</div>
+
+                    <div class="row">
+                        <div class="col col-md-12" style="margin-top: 10px;">
+                            <div class="form-group">
+                                <label for="name" class="col-sm-4 control-label">Nombre</label>
+
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" id="name" ng-model="data.authentication.name"
+                                           placeholder="Nombre">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="rut" class="col-sm-4 control-label">Rut</label>
+
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" id="rut" ng-model="data.authentication.rut"
+                                           placeholder="Rut">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" style="padding-top: 20px;">
+                        <div class="col col-md-6 col-md-offset-6">
+                            <button type="button" class="btn btn-block"
+                                    ng-class="{'btn-repo': goodToGoTo('authentication-new'), 'disabled': !goodToGoTo('authentication-new')}"
+                                    ng-click="saveClient()">Guardar</button>
+                        </div>
+                    </div>
+
+                </div>
                 <div class="checkout-step-small" ng-show="['delivery', 'payment', 'resumen'].indexOf(checkoutStep) >= 0">
-                    <span><b>Sus Datos:</b> {{data.authentication.email}} {{data.authentication.mobile_number}}</span>
+                    <span><b>Sus Datos:</b> {{client.first_name}} {{client.last_name}}</span>
                 </div>
 
 
@@ -139,7 +195,32 @@
 
                     <div class="title">Dirección de despacho</div>
 
-                    <div class="row">
+                    <span ng-if="addresses && addresses.length > 0">
+                        Eliga una dirección o cree una nueva
+                    </span>
+
+                    <div class="row" ng-if="addresses && addresses.length > 0">
+                        <div class="col col-md-12">
+                            <div class="radio radio-address"
+                                 ng-class="{selected: data.selectedAddressId == address.id}"
+                                 ng-repeat="address in addresses">
+                                <label>
+                                    <input type="radio" name="talleresRadios" value="{{address.id}}" ng-model="data.selectedAddressId">
+                                    <div>{{address.street}} {{address.number}}, {{address.detail}}</div>
+                                    <div>{{address.commune}}</div>
+                                </label>
+                            </div>
+                            <div class="radio radio-address"
+                                 ng-class="{selected: data.selectedAddressId == -1}">
+                                <label>
+                                    <input type="radio" name="talleresRadios" value="-1" ng-model="data.selectedAddressId">
+                                    <div>Voy a especificar otra</div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" ng-if="data.selectedAddressId == -1">
                         <div class="col col-md-12" style="margin-top: 10px;">
                             <div class="form-group">
                                 <label for="street" class="col-sm-4 control-label">Dirección</label>
@@ -184,7 +265,7 @@
 
                 </div>
                 <div class="checkout-step-small" ng-show="['payment', 'resumen'].indexOf(checkoutStep) >= 0">
-                    <span><b>Dirección de Despacho:</b> {{data.delivery.street}} {{data.delivery.apt}} {{data.delivery.commune}}</span>
+                    <span><b>Dirección de Despacho:</b> {{selectedAddress.street}} {{selectedAddress.detail}} {{selectedAddress.commune}}</span>
                 </div>
 
 

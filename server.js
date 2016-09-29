@@ -19,7 +19,8 @@ app.use(bodyParser.json({type: 'application/vnd.api+json'})); // parse applicati
 app.use(cors());
 app.options('*', cors()); // include before other routes
 
-var DB_CONN_STRING = "postgres://postgres@localhost:5432/repo";
+//var DB_CONN_STRING = "postgres://postgres@localhost:5432/repo";
+var DB_CONN_STRING = "postgres://postgres@200.75.18.197:5432/repo";
 console.log("DB_CONN_STRING", DB_CONN_STRING);
 
 // routes ======================================================================
@@ -37,8 +38,23 @@ app.get('/api/any', function (req, res) {
             return res.status(500).json({success: false, data: err});
         }
 
+        if(req.query.values){
+            req.query.values = JSON.parse(req.query.values);
+        }
+
+        var sql = "SELECT * FROM " + req.query.table;
+        if(req.query.values){
+            sql += " WHERE ";
+            _.forOwn(req.query.values, function(value, key){
+                sql += key + " = " + getSqlValue(value) + " AND ";
+            });
+            sql = sql.substring(0, sql.length-5);
+        }
+
+        console.log("------------------ select = " + sql);
+
         // SQL Query > Select Data
-        var query = client.query("SELECT * FROM " + req.query.table);
+        var query = client.query(sql);
 
         // Stream results back one row at a time
         query.on('row', function (row) {
@@ -52,6 +68,57 @@ app.get('/api/any', function (req, res) {
         });
     });
 });
+
+app.put('/api/any', function (req, res) {
+
+    // Get a Postgres client from the connection pool
+    pg.connect(DB_CONN_STRING, function (err, client, done) {
+        // Handle connection errors
+        if (err) {
+            done();
+            console.log(err);
+            return res.status(500).json({success: false, data: err});
+        }
+
+        var sqlp1 = "";
+        var sqlp2 = "";
+
+        _.forOwn(req.body.values, function(value, key){
+            if(value != undefined){
+                sqlp1 += key + ", ";
+                sqlp2 += getSqlValue(value) + ", ";
+            }
+        });
+        sqlp1 = sqlp1.substring(0, sqlp1.length-2);
+        sqlp2 = sqlp2.substring(0, sqlp2.length-2);
+
+        var sql = "INSERT INTO " + req.body.table + "(" + sqlp1 + ") VALUES (" + sqlp2 + ") RETURNING id";
+        console.log("------------------ insert = " + sql);
+
+        // SQL Query > Select Data
+        var query = client.query(sql);
+
+        // Stream results back one row at a time
+        var insertedId = undefined;
+        query.on('row', function (row) {
+            insertedId = row.id;
+        });
+
+        // After all data is returned, close connection and return results
+        query.on('end', function () {
+            done();
+            return res.json({id:insertedId});
+        });
+    });
+});
+
+function getSqlValue(value){
+    if(typeof value == 'string'){
+        return "\'" + value + "\'";
+    }else{
+        return value;
+    }
+}
 
 // application -------------------------------------------------------------
 app.get('*', function (req, res) {
