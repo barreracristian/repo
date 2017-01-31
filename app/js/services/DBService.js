@@ -9,30 +9,34 @@ angular.module('repo.services.DBService', [])
                 params.values = values;
             }
 
-            $http.get('/api/any', {params: params})
-                .success(function (data) {
+            $http.get('/api/any', {params: params}).then(
+                function (data) {
                     console.timeEnd('TIME getany-' + what);
-                    q.resolve(data);
-                })
-                .error(function (error) {
+                    q.resolve(data.data);
+                },
+                function (error) {
                     console.log('ERROR getany-' + what + ': ' + error);
                     q.reject(error);
-                });
+                }
+            );
+
             return q.promise;
         }
 
         function insertAny(where, values) {
             var q = $q.defer();
             console.time('TIME insert-in-' + where);
-            $http.put('/api/any', {table: where, values: values})
-                .success(function (data) {
+            $http.put('/api/any', {table: where, values: values}).then(
+                function (data) {
                     console.timeEnd('TIME insert-in-' + where);
-                    q.resolve(data);
-                })
-                .error(function (error) {
+                    q.resolve(data.data);
+                },
+                function (error) {
                     console.log('ERROR insert-in-' + where + ': ' + error);
                     q.reject(error);
-                });
+                }
+            );
+
             return q.promise;
         }
 
@@ -88,7 +92,7 @@ angular.module('repo.services.DBService', [])
                         address_id: ret.id,
                         last: true,
                         garage: false
-                    }).then(function(){
+                    }).then(function () {
                         return ret;
                     })
                 });

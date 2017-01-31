@@ -5,12 +5,12 @@
   "main": "server.js",
   "author": "cbarrera",
   "dependencies": {
-    "express": "^4.13.4",
     "body-parser": "^1.4.3",
     "cors": "2.7.1",
+    "express": "^4.13.4",
     "lodash": "3.10.0",
     "moment": "2.13.0",
-    "pg": "4.4.6",
+    "pg": "^6.1.2",
     "q": "1.4.1"
   }
 }

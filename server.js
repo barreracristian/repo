@@ -20,8 +20,19 @@ app.use(cors());
 app.options('*', cors()); // include before other routes
 
 //var DB_CONN_STRING = "postgres://postgres@localhost:5432/repo";
-var DB_CONN_STRING = "postgres://postgres@200.75.18.197:5432/repo";
+//var DB_CONN_STRING = "postgres://postgres@200.75.18.197:5432/repo";
+var DB_CONN_STRING = "postgres://postgres@172.34.10.50:5432/repo";
 console.log("DB_CONN_STRING", DB_CONN_STRING);
+var config = {
+    user: 'postgres', //env var: PGUSER
+    database: 'repo', //env var: PGDATABASE
+    password: '1q2w3e4r', //env var: PGPASSWORD
+    host: '172.34.10.50', // Server hosting the postgres database
+    port: 5432, //env var: PGPORT
+    max: 10, // max number of clients in the pool
+    idleTimeoutMillis: 30000, // how long a client is allowed to remain idle before being closed
+};
+var pool = new pg.Pool(config);
 
 // routes ======================================================================
 
@@ -30,7 +41,7 @@ app.get('/api/any', function (req, res) {
     var results = [];
 
     // Get a Postgres client from the connection pool
-    pg.connect(DB_CONN_STRING, function (err, client, done) {
+    pool.connect(function (err, client, done) {
         // Handle connection errors
         if (err) {
             done();
@@ -72,7 +83,7 @@ app.get('/api/any', function (req, res) {
 app.put('/api/any', function (req, res) {
 
     // Get a Postgres client from the connection pool
-    pg.connect(DB_CONN_STRING, function (err, client, done) {
+    pool.connect(function (err, client, done) {
         // Handle connection errors
         if (err) {
             done();
